@@ -34,4 +34,9 @@ public class ChannelOptions {
     public void setResolution(String resolution) {
         this.resolution = resolution;
     }
+
+    @Override
+    public String toString() {
+        return format + ", " + url + ", " + resolution;
+    }
 }

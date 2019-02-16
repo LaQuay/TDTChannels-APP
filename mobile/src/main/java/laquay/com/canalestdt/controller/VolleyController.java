@@ -1,4 +1,4 @@
-package laquay.com.canalestdt;
+package laquay.com.canalestdt.controller;
 
 import android.content.Context;
 

@@ -10,13 +10,13 @@ public class Channel {
     private String extraInfo;
     private ArrayList<ChannelOptions> options;
 
-    public Channel(String name, String web, String logo, String epgID, String extraInfo, ArrayList<ChannelOptions> options) {
+    public Channel(String name, String web, String logo, String epgID, ArrayList<ChannelOptions> options, String extraInfo) {
         this.name = name;
         this.web = web;
         this.logo = logo;
         this.epgID = epgID;
-        this.extraInfo = extraInfo;
         this.options = options;
+        this.extraInfo = extraInfo;
     }
 
     public String getName() {
@@ -51,6 +51,14 @@ public class Channel {
         this.epgID = epgID;
     }
 
+    public ArrayList<ChannelOptions> getOptions() {
+        return options;
+    }
+
+    public void setOptions(ArrayList<ChannelOptions> options) {
+        this.options = options;
+    }
+
     public String getExtraInfo() {
         return extraInfo;
     }
@@ -59,11 +67,8 @@ public class Channel {
         this.extraInfo = extraInfo;
     }
 
-    public ArrayList<ChannelOptions> getOptions() {
-        return options;
-    }
-
-    public void setOptions(ArrayList<ChannelOptions> options) {
-        this.options = options;
+    @Override
+    public String toString() {
+        return name + ", " + web + ", " + logo + ", " + epgID + ", " + options.toString() + ", " + extraInfo;
     }
 }

@@ -4,11 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainFragment extends Fragment {
+import java.util.ArrayList;
+
+import laquay.com.canalestdt.controller.APIController;
+import laquay.com.canalestdt.model.Country;
+
+public class MainFragment extends Fragment implements APIController.ResponseServerCallback {
     public static final String TAG = MainFragment.class.getSimpleName();
     private View rootView;
 
@@ -24,6 +30,8 @@ public class MainFragment extends Fragment {
         setUpElements();
         setUpListeners();
 
+        APIController.getInstance().loadChannels(false, getContext(), this);
+
         return rootView;
     }
 
@@ -33,5 +41,10 @@ public class MainFragment extends Fragment {
 
     private void setUpListeners() {
 
+    }
+
+    @Override
+    public void onChannelLoadServer(ArrayList<Country> countries) {
+        Log.i(TAG, "Received channels");
     }
 }
