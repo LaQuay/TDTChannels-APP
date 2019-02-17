@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Check first item
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_camera));
     }
 
@@ -69,10 +71,11 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
         Fragment fragment = null;
         String fragmentTAG = null;
 
-        int id = item.getItemId();
         if (id == R.id.nav_camera) {
             fragment = MainFragment.newInstance();
             fragmentTAG = MainFragment.TAG;
@@ -90,7 +93,8 @@ public class MainActivity extends AppCompatActivity
 
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(android.R.id.content, fragment, fragmentTAG).commit();
+            ft.replace(R.id.content_frame, fragment, fragmentTAG);
+            ft.commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
