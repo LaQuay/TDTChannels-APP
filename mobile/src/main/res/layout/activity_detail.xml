@@ -13,10 +13,11 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <View
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/channel_video_detail_tv"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="20dp" />
+        android:layout_height="250dp"
+        android:layout_margin="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +29,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Channel" />
+            android:text="Channel"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/channel_name_detail_tv"
@@ -36,19 +38,22 @@
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
             android:text="La 1 HD"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Website" />
+            android:paddingTop="5dp"
+            android:text="Website"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/channel_url_detail_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autoLink="web"
             android:paddingStart="10dp"
-            android:text="url..." />
-
+            android:text="url..."
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>
