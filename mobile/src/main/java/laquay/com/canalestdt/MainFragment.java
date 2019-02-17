@@ -109,34 +109,6 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
                 holder.titleView = convertView.findViewById(R.id.channel_title);
                 holder.subtitleView = convertView.findViewById(R.id.channel_description);
 
-                // Temporary fix
-                String imageUrl = channels.get(position).getChannel().getLogo();
-                imageUrl = imageUrl.replace("http://graph.facebook.com", "https://graph.facebook.com");
-
-                final ViewHolder finalHolder = holder;
-                ImageRequest request = new ImageRequest(imageUrl,
-                        new Response.Listener<Bitmap>() {
-                            @Override
-                            public void onResponse(Bitmap bitmap) {
-                                finalHolder.imageView.setImageBitmap(bitmap);
-                            }
-                        }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null,
-                        new Response.ErrorListener() {
-                            public void onErrorResponse(VolleyError error) {
-                            }
-                        });
-                VolleyController.getInstance(getContext()).addToQueue(request);
-
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "onClick " + channels.get(position).getChannel().getName());
-                        Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
-                        intent.putExtra(EXTRA_MESSAGE, channels.get(position));
-                        startActivity(intent);
-                    }
-                });
-
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -144,6 +116,36 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
 
             holder.titleView.setText(channels.get(position).getChannel().getName());
             holder.subtitleView.setText(channels.get(position).getCountryName() + " - " + channels.get(position).getCommunityName());
+            holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+
+            String imageUrl = channels.get(position).getChannel().getLogo();
+            // Temporary fix
+            imageUrl = imageUrl.replace("http://graph.facebook.com", "https://graph.facebook.com");
+
+            final ViewHolder finalHolder = holder;
+            ImageRequest request = new ImageRequest(imageUrl,
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap bitmap) {
+                            finalHolder.imageView.setImageBitmap(bitmap);
+                        }
+                    }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null,
+                    new Response.ErrorListener() {
+                        public void onErrorResponse(VolleyError error) {
+                            finalHolder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+                        }
+                    });
+            VolleyController.getInstance(getContext()).addToQueue(request);
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d(TAG, "onClick " + channels.get(position).getChannel().getName());
+                    Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
+                    intent.putExtra(EXTRA_MESSAGE, channels.get(position));
+                    startActivity(intent);
+                }
+            });
 
             return convertView;
         }
