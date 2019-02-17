@@ -1,6 +1,8 @@
 package laquay.com.canalestdt.model;
 
-public class ChannelOptions {
+import java.io.Serializable;
+
+public class ChannelOptions implements Serializable {
     private String format;
     private String url;
     private String resolution;

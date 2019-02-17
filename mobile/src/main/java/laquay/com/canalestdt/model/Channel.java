@@ -1,8 +1,9 @@
 package laquay.com.canalestdt.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Channel {
+public class Channel implements Serializable {
     private String name;
     private String web;
     private String logo;

@@ -1,6 +1,7 @@
 package laquay.com.canalestdt;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +22,8 @@ import laquay.com.canalestdt.controller.APIController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.Community;
 import laquay.com.canalestdt.model.Country;
+
+import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_MESSAGE;
 
 public class MainFragment extends Fragment implements APIController.ResponseServerCallback {
     public static final String TAG = MainFragment.class.getSimpleName();
@@ -90,28 +93,41 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
 
         @NonNull
         @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ViewHolder holder = new ViewHolder();
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.item_list, parent, false);
 
-                holder.textView = convertView.findViewById(R.id.firstLine);
                 holder.imageView = convertView.findViewById(R.id.icon);
+                holder.titleView = convertView.findViewById(R.id.firstLine);
+                holder.subtitleView = convertView.findViewById(R.id.secondLine);
+
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "onClick " + channels.get(position).getChannel().getName());
+                        Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
+                        intent.putExtra(EXTRA_MESSAGE, channels.get(position));
+                        startActivity(intent);
+                    }
+                });
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.textView.setText(channels.get(position).getChannel().getName());
+            holder.titleView.setText(channels.get(position).getChannel().getName());
+            holder.subtitleView.setText(channels.get(position).getCountryName() + " - " + channels.get(position).getCommunityName());
 
             return convertView;
         }
 
         class ViewHolder {
-            TextView textView;
             ImageView imageView;
+            TextView titleView;
+            TextView subtitleView;
         }
     }
 }

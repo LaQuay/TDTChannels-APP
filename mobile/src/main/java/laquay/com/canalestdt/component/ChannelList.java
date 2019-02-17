@@ -1,8 +1,10 @@
 package laquay.com.canalestdt.component;
 
+import java.io.Serializable;
+
 import laquay.com.canalestdt.model.Channel;
 
-public class ChannelList {
+public class ChannelList implements Serializable {
     private String countryName;
     private String communityName;
     private Channel channel;
