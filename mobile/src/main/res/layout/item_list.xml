@@ -4,36 +4,37 @@
     android:padding="6dp">
 
     <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:id="@+id/channel_icon"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="6dp"
-        android:contentDescription="TODO"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:adjustViewBounds="true"
         android:src="@drawable/ic_launcher_foreground" />
 
     <TextView
-        android:id="@+id/secondLine"
+        android:id="@+id/channel_description"
         android:layout_width="fill_parent"
         android:layout_height="26dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/icon"
+        android:layout_toRightOf="@id/channel_icon"
         android:ellipsize="marquee"
         android:singleLine="true"
         android:text="Description"
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/firstLine"
+        android:id="@+id/channel_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/secondLine"
+        android:layout_above="@id/channel_description"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/icon"
+        android:layout_toRightOf="@id/channel_icon"
         android:gravity="center_vertical"
         android:text="Example application"
         android:textSize="16sp" />

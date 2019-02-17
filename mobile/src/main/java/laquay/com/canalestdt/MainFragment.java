@@ -2,6 +2,7 @@ package laquay.com.canalestdt;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,10 +16,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+
 import java.util.ArrayList;
 
 import laquay.com.canalestdt.component.ChannelList;
 import laquay.com.canalestdt.controller.APIController;
+import laquay.com.canalestdt.controller.VolleyController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.Community;
 import laquay.com.canalestdt.model.Country;
@@ -99,9 +105,27 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.item_list, parent, false);
 
-                holder.imageView = convertView.findViewById(R.id.icon);
-                holder.titleView = convertView.findViewById(R.id.firstLine);
-                holder.subtitleView = convertView.findViewById(R.id.secondLine);
+                holder.imageView = convertView.findViewById(R.id.channel_icon);
+                holder.titleView = convertView.findViewById(R.id.channel_title);
+                holder.subtitleView = convertView.findViewById(R.id.channel_description);
+
+                // Temporary fix
+                String imageUrl = channels.get(position).getChannel().getLogo();
+                imageUrl = imageUrl.replace("http://graph.facebook.com", "https://graph.facebook.com");
+
+                final ViewHolder finalHolder = holder;
+                ImageRequest request = new ImageRequest(imageUrl,
+                        new Response.Listener<Bitmap>() {
+                            @Override
+                            public void onResponse(Bitmap bitmap) {
+                                finalHolder.imageView.setImageBitmap(bitmap);
+                            }
+                        }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null,
+                        new Response.ErrorListener() {
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                VolleyController.getInstance(getContext()).addToQueue(request);
 
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
