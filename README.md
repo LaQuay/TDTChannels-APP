@@ -4,6 +4,12 @@ Aplicación oficial para la reproducción de los canales enlazados en el reposit
 ### Descarga
 Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChannels-APP/releases)
 
+### Mejoras planificadas
+- Posibilidad de reproducir a pantalla completa.
+- Filtrado de canales.
+- Más opciones de reproducción del M3U8. Por ahora solo se utiliza la primera del JSON.
+- Inclusión del EPG del canal.
+
 ### Licencia del proyecto
 Tal como indica la licencia MIT, cualquier persona puede hacer el uso que considere de este repositorio, el único condicionante es que se debe poder verse explícitamente que la información que está utilizando procede de este repositorio.
 
