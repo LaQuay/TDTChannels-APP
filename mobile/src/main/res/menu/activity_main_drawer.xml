@@ -5,21 +5,24 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_tv_channels"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="@string/nav_tv_channels" />
+
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_radio_channels"
+            android:icon="@drawable/ic_menu_radio"
+            android:title="@string/nav_radio_channels" />
+
+        <item
+            android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="@string/nav_tools" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_info"
+            android:title="@string/nav_about" />
     </group>
 
     <item android:title="Communicate">
@@ -27,12 +30,11 @@
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="@string/nav_share" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_send_telegram"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="@string/nav_telegram" />
         </menu>
     </item>
-
 </menu>

@@ -1,5 +1,7 @@
 package laquay.com.canalestdt;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // Check first item
-        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_camera));
+        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_tv_channels));
     }
 
     @Override
@@ -76,19 +78,23 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         String fragmentTAG = null;
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_tv_channels) {
             fragment = MainFragment.newInstance();
             fragmentTAG = MainFragment.TAG;
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_radio_channels) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_send_telegram) {
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=canales_tdt"));
+                startActivity(intent);
+            } catch (Exception e) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/canales_tdt"));
+                startActivity(intent);
+            }
         }
 
         if (fragment != null) {
