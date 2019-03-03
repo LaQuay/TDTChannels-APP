@@ -94,7 +94,9 @@ public class DetailChannelActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        player.release();
+        if (player != null) {
+            player.release();
+        }
     }
 
     @Override
