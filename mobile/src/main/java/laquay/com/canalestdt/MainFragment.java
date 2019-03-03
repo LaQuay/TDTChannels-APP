@@ -3,15 +3,24 @@ package laquay.com.canalestdt;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +44,7 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
     public static final String TAG = MainFragment.class.getSimpleName();
     private View rootView;
     private ListView channelListView;
+    private CountryArrayAdapter arrayAdapter;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -45,6 +55,7 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        setHasOptionsMenu(true);
         setUpElements();
         setUpListeners();
 
@@ -81,7 +92,7 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
                 }
             }
 
-            CountryArrayAdapter arrayAdapter = new CountryArrayAdapter(getContext(), channelLists);
+            arrayAdapter = new CountryArrayAdapter(getContext(), channelLists);
             channelListView.setAdapter(arrayAdapter);
             arrayAdapter.notifyDataSetChanged();
         }
@@ -89,12 +100,55 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
         Log.i(TAG, "Redrawing channels - End");
     }
 
-    public class CountryArrayAdapter extends ArrayAdapter<ChannelList> {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.fragment_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        // Change color of the search button
+        if (getContext() != null) {
+            Drawable drawable = DrawableCompat.wrap(searchItem.getIcon());
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(getContext(), R.color.white));
+            menu.findItem(R.id.action_search).setIcon(drawable);
+        }
+
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // This will be fired every time you input any character.
+                if (arrayAdapter != null) {
+                    arrayAdapter.getFilter().filter(newText);
+                }
+                return false;
+            }
+        });
+    }
+
+    public class CountryArrayAdapter extends ArrayAdapter<ChannelList> implements Filterable {
         private final ArrayList<ChannelList> channels;
+        private ArrayList<ChannelList> filteredChannels;
+        private ItemFilter mFilter = new ItemFilter();
 
         public CountryArrayAdapter(@NonNull Context context, ArrayList<ChannelList> channels) {
             super(context, 0, channels);
             this.channels = channels;
+            this.filteredChannels = channels;
+        }
+
+        @NonNull
+        public Filter getFilter() {
+            return mFilter;
+        }
+
+        @Override
+        public int getCount() {
+            return filteredChannels.size();
         }
 
         @NonNull
@@ -103,7 +157,7 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ViewHolder holder = new ViewHolder();
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.item_list, parent, false);
+                convertView = inflater.inflate(R.layout.item_list_channels, parent, false);
 
                 holder.imageView = convertView.findViewById(R.id.channel_icon);
                 holder.titleView = convertView.findViewById(R.id.channel_title);
@@ -114,11 +168,11 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.titleView.setText(channels.get(position).getChannel().getName());
-            holder.subtitleView.setText(channels.get(position).getCountryName() + " - " + channels.get(position).getCommunityName());
+            holder.titleView.setText(filteredChannels.get(position).getChannel().getName());
+            holder.subtitleView.setText(filteredChannels.get(position).getCountryName() + " - " + filteredChannels.get(position).getCommunityName());
             holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
 
-            String imageUrl = channels.get(position).getChannel().getLogo();
+            String imageUrl = filteredChannels.get(position).getChannel().getLogo();
             // Temporary fix
             imageUrl = imageUrl.replace("http://graph.facebook.com", "https://graph.facebook.com");
 
@@ -140,14 +194,45 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d(TAG, "onClick " + channels.get(position).getChannel().getName());
+                    Log.d(TAG, "onClick " + filteredChannels.get(position).getChannel().getName());
                     Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
-                    intent.putExtra(EXTRA_MESSAGE, channels.get(position));
+                    intent.putExtra(EXTRA_MESSAGE, filteredChannels.get(position));
                     startActivity(intent);
                 }
             });
 
             return convertView;
+        }
+
+        private class ItemFilter extends Filter {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String filterString = constraint.toString().toLowerCase();
+                FilterResults results = new FilterResults();
+
+                final ArrayList<ChannelList> filteredChannels = new ArrayList<>();
+
+                String channelNameToFilter;
+                for (int i = 0; i < channels.size(); i++) {
+                    ChannelList channelList = channels.get(i);
+                    channelNameToFilter = channelList.getChannel().getName();
+
+                    if (channelNameToFilter.toLowerCase().contains(filterString)) {
+                        filteredChannels.add(channelList);
+                    }
+                }
+
+                results.values = filteredChannels;
+                results.count = filteredChannels.size();
+                return results;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredChannels = (ArrayList<ChannelList>) results.values;
+                notifyDataSetChanged();
+            }
         }
 
         class ViewHolder {

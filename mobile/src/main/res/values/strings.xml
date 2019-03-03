@@ -6,7 +6,7 @@
     <string name="nav_header_title">TDTChannels</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
     <string name="nav_tv_channels">TV Channels</string>
     <string name="nav_radio_channels">Radio Channels</string>
     <string name="nav_tools">Tools</string>
@@ -17,4 +17,6 @@
     <string name="share_using">Share using</string>
     <string name="about_app_info">Open source application\nLicense can be found in the repository.</string>
     <string name="about_app_license">Licenses</string>
+    <string name="channel_detail_no_media_found">No media found</string>
+    <string name="channel_detail_currenty_playing">Currently playing</string>
 </resources>
