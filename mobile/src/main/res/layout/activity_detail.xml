@@ -13,11 +13,20 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-        android:id="@+id/channel_video_detail_tv"
+    <TextView
+        android:id="@+id/channel_mock_detail_tv"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_margin="10dp" />
+        android:gravity="center"
+        android:text="@string/channel_detail_no_media_found"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/channel_video_detail_exoplayer"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"

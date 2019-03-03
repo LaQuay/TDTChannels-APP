@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -27,6 +28,7 @@ public class DetailChannelActivity extends AppCompatActivity {
     private SimpleExoPlayer player;
 
     private PlayerView channelVideoView;
+    private TextView channelMockTV;
     private TextView channelNameTV;
     private TextView channelURLTV;
 
@@ -54,7 +56,8 @@ public class DetailChannelActivity extends AppCompatActivity {
     }
 
     private void setUpElements() {
-        channelVideoView = findViewById(R.id.channel_video_detail_tv);
+        channelVideoView = findViewById(R.id.channel_video_detail_exoplayer);
+        channelMockTV = findViewById(R.id.channel_mock_detail_tv);
         channelNameTV = findViewById(R.id.channel_name_detail_tv);
         channelURLTV = findViewById(R.id.channel_url_detail_tv);
     }
@@ -71,6 +74,9 @@ public class DetailChannelActivity extends AppCompatActivity {
         // TODO Select different option
         if (!channel.getOptions().isEmpty()) {
             loadVideo(Uri.parse(channel.getOptions().get(0).getUrl()));
+        } else {
+            channelVideoView.setVisibility(View.GONE);
+            channelMockTV.setVisibility(View.VISIBLE);
         }
     }
 
