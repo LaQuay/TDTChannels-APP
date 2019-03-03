@@ -69,8 +69,12 @@ public class DetailChannelActivity extends AppCompatActivity {
 
         // Load first option
         // TODO Select different option
-        Uri channelUri = Uri.parse(channel.getOptions().get(0).getUrl());
+        if (!channel.getOptions().isEmpty()) {
+            loadVideo(Uri.parse(channel.getOptions().get(0).getUrl()));
+        }
+    }
 
+    public void loadVideo(Uri videoUri) {
         player = ExoPlayerFactory.newSimpleInstance(this);
         channelVideoView.setPlayer(player);
 
@@ -80,7 +84,7 @@ public class DetailChannelActivity extends AppCompatActivity {
 
         // This is the MediaSource representing the media to be played.
         MediaSource videoSource = new HlsMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(channelUri);
+                .createMediaSource(videoUri);
 
         // Prepare the player with the source.
         player.prepare(videoSource);
