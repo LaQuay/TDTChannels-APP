@@ -7,7 +7,6 @@ Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChann
 ### Mejoras planificadas
 - Posibilidad de reproducir a pantalla completa.
 - Filtrado de canales.
-- Más opciones de reproducción del M3U8. Por ahora solo se utiliza la primera del JSON.
 - Inclusión del EPG del canal.
 
 ### Licencia del proyecto
