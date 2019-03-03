@@ -1,6 +1,7 @@
 ## v0.X.X - [unreleased]
 
 - Buscador de canales.
+- Posibilidad de utilizar diferente fuente en cada canal.
 - Mejora visual en la reproducción de canales.
 - Solucionado el error en que la aplicación se cerraba si no había datos a reproducir.
 
