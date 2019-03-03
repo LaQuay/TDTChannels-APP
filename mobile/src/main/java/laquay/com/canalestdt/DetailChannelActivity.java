@@ -7,6 +7,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -14,23 +17,28 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
+
 import laquay.com.canalestdt.component.ChannelList;
 import laquay.com.canalestdt.model.Channel;
+import laquay.com.canalestdt.model.ChannelOptions;
 
 public class DetailChannelActivity extends AppCompatActivity {
     public static final String TAG = DetailChannelActivity.class.getSimpleName();
     public static final String EXTRA_MESSAGE = "laquay.com.canalestdt.CHANNEL_DETAIL";
     private Channel channel;
     private SimpleExoPlayer player;
+    private DefaultDataSourceFactory dataSourceFactory;
 
     private PlayerView channelVideoView;
     private TextView channelMockTV;
     private TextView channelNameTV;
     private TextView channelURLTV;
+    private TextView channelSourceTV;
+    private ListView channelSourceLV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,14 @@ public class DetailChannelActivity extends AppCompatActivity {
         channelMockTV = findViewById(R.id.channel_mock_detail_tv);
         channelNameTV = findViewById(R.id.channel_name_detail_tv);
         channelURLTV = findViewById(R.id.channel_url_detail_tv);
+        channelSourceTV = findViewById(R.id.channel_source_detail_tv);
+        channelSourceLV = findViewById(R.id.channel_source_detail_lv);
+
+        player = ExoPlayerFactory.newSimpleInstance(this);
+
+        // Produces DataSource instances through which media data is loaded.
+        dataSourceFactory = new DefaultDataSourceFactory(this,
+                Util.getUserAgent(this, "laquay.com.canalestdt"));
     }
 
     private void setUpListeners() {
@@ -71,26 +87,40 @@ public class DetailChannelActivity extends AppCompatActivity {
         channelURLTV.setText(channel.getWeb());
 
         // Load first option
-        // TODO Select different option
         if (!channel.getOptions().isEmpty()) {
-            loadVideo(Uri.parse(channel.getOptions().get(0).getUrl()));
+            // Fill available options
+            ArrayList<String> sources = new ArrayList<>();
+            for (ChannelOptions channelOption : channel.getOptions()) {
+                sources.add(channelOption.getUrl());
+            }
+
+            ArrayAdapter<String> sourcesAdapter = new ArrayAdapter<>(this,
+                    R.layout.item_list_detail_channel, android.R.id.text1, sources);
+            channelSourceLV.setAdapter(sourcesAdapter);
+
+            channelSourceLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String source = (String) channelSourceLV.getItemAtPosition(position);
+                    loadVideo(source, position);
+                }
+            });
+
+            loadVideo(sources.get(0), 0);
         } else {
             channelVideoView.setVisibility(View.GONE);
+            channelSourceTV.setVisibility(View.GONE);
             channelMockTV.setVisibility(View.VISIBLE);
         }
     }
 
-    public void loadVideo(Uri videoUri) {
-        player = ExoPlayerFactory.newSimpleInstance(this);
+    public void loadVideo(String streamURL, int sourceNumber) {
+        channelSourceTV.setText(getString(R.string.channel_detail_currenty_playing) + " - Source: " + (sourceNumber + 1));
         channelVideoView.setPlayer(player);
-
-        // Produces DataSource instances through which media data is loaded.
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
-                Util.getUserAgent(this, "laquay.com.canalestdt"));
 
         // This is the MediaSource representing the media to be played.
         MediaSource videoSource = new HlsMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(videoUri);
+                .createMediaSource(Uri.parse(streamURL));
 
         // Prepare the player with the source.
         player.prepare(videoSource);

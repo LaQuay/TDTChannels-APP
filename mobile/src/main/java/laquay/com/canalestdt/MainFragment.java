@@ -157,7 +157,7 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ViewHolder holder = new ViewHolder();
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.item_list, parent, false);
+                convertView = inflater.inflate(R.layout.item_list_channels, parent, false);
 
                 holder.imageView = convertView.findViewById(R.id.channel_icon);
                 holder.titleView = convertView.findViewById(R.id.channel_title);

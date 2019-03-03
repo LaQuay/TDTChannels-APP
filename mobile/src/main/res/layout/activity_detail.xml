@@ -36,33 +36,44 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Channel"
-            android:textSize="16sp" />
-
-        <TextView
             android:id="@+id/channel_name_detail_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
             android:paddingStart="10dp"
             android:text="La 1 HD"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="Website"
-            android:textSize="16sp" />
+            android:textSize="19sp" />
 
         <TextView
             android:id="@+id/channel_url_detail_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoLink="web"
+            android:fontFamily="sans-serif-light"
             android:paddingStart="10dp"
+            android:paddingTop="10dp"
             android:text="url..."
-            android:textSize="18sp" />
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/channel_source_detail_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:fontFamily="sans-serif-light"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/channel_detail_currenty_playing"
+            android:textSize="16sp" />
+
+        <ListView
+            android:id="@+id/channel_source_detail_lv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:fontFamily="sans-serif-light"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

@@ -18,4 +18,5 @@
     <string name="about_app_info">Open source application\nLicense can be found in the repository.</string>
     <string name="about_app_license">Licenses</string>
     <string name="channel_detail_no_media_found">No media found</string>
+    <string name="channel_detail_currenty_playing">Currently playing</string>
 </resources>
