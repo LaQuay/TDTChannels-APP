@@ -172,8 +172,8 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
             holder.subtitleView.setText(filteredChannels.get(position).getCountryName() + " - " + filteredChannels.get(position).getCommunityName());
             holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
 
-            String imageUrl = filteredChannels.get(position).getChannel().getLogo();
             // Temporary fix
+            String imageUrl = filteredChannels.get(position).getChannel().getLogo();
             imageUrl = imageUrl.replace("http://graph.facebook.com", "https://graph.facebook.com");
 
             final ViewHolder finalHolder = holder;

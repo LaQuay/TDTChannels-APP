@@ -96,7 +96,11 @@ public class DetailChannelActivity extends AppCompatActivity {
             });
         }
 
-        ImageRequest request = new ImageRequest(channel.getLogo(),
+        // Temporary fix
+        String imageUrl = channel.getLogo();
+        imageUrl = imageUrl.replace("http://graph.facebook.com", "https://graph.facebook.com");
+
+        ImageRequest request = new ImageRequest(imageUrl,
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
