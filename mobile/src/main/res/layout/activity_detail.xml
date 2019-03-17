@@ -22,8 +22,8 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
-    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-        android:id="@+id/channel_video_detail_exoplayer"
+    <View
+        android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:visibility="visible" />

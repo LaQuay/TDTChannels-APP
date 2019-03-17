@@ -3,6 +3,7 @@ package laquay.com.canalestdt;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,10 +31,7 @@ public class DetailChannelActivity extends AppCompatActivity {
     public static final String TAG = DetailChannelActivity.class.getSimpleName();
     public static final String EXTRA_MESSAGE = "laquay.com.canalestdt.CHANNEL_DETAIL";
     private Channel channel;
-    private SimpleExoPlayer player;
-    private DefaultDataSourceFactory dataSourceFactory;
 
-    private PlayerView channelVideoView;
     private TextView channelMockTV;
     private TextView channelNameTV;
     private TextView channelURLTV;
@@ -64,18 +62,11 @@ public class DetailChannelActivity extends AppCompatActivity {
     }
 
     private void setUpElements() {
-        channelVideoView = findViewById(R.id.channel_video_detail_exoplayer);
         channelMockTV = findViewById(R.id.channel_mock_detail_tv);
         channelNameTV = findViewById(R.id.channel_name_detail_tv);
         channelURLTV = findViewById(R.id.channel_url_detail_tv);
         channelSourceTV = findViewById(R.id.channel_source_detail_tv);
         channelSourceLV = findViewById(R.id.channel_source_detail_lv);
-
-        player = ExoPlayerFactory.newSimpleInstance(this);
-
-        // Produces DataSource instances through which media data is loaded.
-        dataSourceFactory = new DefaultDataSourceFactory(this,
-                Util.getUserAgent(this, "laquay.com.canalestdt"));
     }
 
     private void setUpListeners() {
@@ -102,37 +93,18 @@ public class DetailChannelActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String source = (String) channelSourceLV.getItemAtPosition(position);
-                    loadVideo(source, position);
+                    loadVideo(source);
                 }
             });
-
-            loadVideo(sources.get(0), 0);
         } else {
-            channelVideoView.setVisibility(View.GONE);
             channelSourceTV.setVisibility(View.GONE);
             channelMockTV.setVisibility(View.VISIBLE);
         }
     }
 
-    public void loadVideo(String streamURL, int sourceNumber) {
-        channelSourceTV.setText(getString(R.string.channel_detail_currenty_playing) + " - Source: " + (sourceNumber + 1));
-        channelVideoView.setPlayer(player);
-
-        // This is the MediaSource representing the media to be played.
-        MediaSource videoSource = new HlsMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(Uri.parse(streamURL));
-
-        // Prepare the player with the source.
-        player.prepare(videoSource);
-    }
-
-    // Activity onStop, player must be release because of memory saving
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (player != null) {
-            player.release();
-        }
+    private void loadVideo(String streamURL) {
+        DialogFragment newFragment = VideoDialogFragment.newInstance(streamURL);
+        newFragment.show(getSupportFragmentManager(), "VideoDialog");
     }
 
     @Override
