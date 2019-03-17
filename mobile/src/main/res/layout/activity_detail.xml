@@ -13,21 +13,6 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <TextView
-        android:id="@+id/channel_mock_detail_tv"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:gravity="center"
-        android:text="@string/channel_detail_no_media_found"
-        android:textSize="20sp"
-        android:visibility="gone" />
-
-    <View
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:visibility="visible" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,40 +20,71 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/channel_name_detail_tv"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:text="La 1 HD"
-            android:textSize="19sp" />
+            android:background="@color/grey_300"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/channel_url_detail_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:fontFamily="sans-serif-light"
-            android:paddingTop="10dp"
-            android:text="url..."
-            android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/channel_image_detail_tv"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:adjustViewBounds="true" />
 
-        <TextView
-            android:id="@+id/channel_source_detail_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:fontFamily="sans-serif-light"
-            android:paddingTop="15dp"
-            android:text="@string/channel_detail_currenty_playing"
-            android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-        <ListView
-            android:id="@+id/channel_source_detail_lv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:fontFamily="sans-serif-light"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/channel_name_detail_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="La 1 HD"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/channel_url_detail_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingTop="10dp"
+                    android:text="url..."
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_200"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/channel_source_detail_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:fontFamily="sans-serif-light"
+                android:paddingTop="10dp"
+                android:text="@string/channel_detail_click_to_play"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/channel_source_detail_lv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:autoLink="web"
+                android:fontFamily="sans-serif-light"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

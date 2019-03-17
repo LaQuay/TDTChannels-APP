@@ -1,7 +1,7 @@
 package laquay.com.canalestdt;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
@@ -10,20 +10,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 
 import java.util.ArrayList;
 
 import laquay.com.canalestdt.component.ChannelList;
+import laquay.com.canalestdt.controller.VolleyController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.ChannelOptions;
 
@@ -32,7 +30,7 @@ public class DetailChannelActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "laquay.com.canalestdt.CHANNEL_DETAIL";
     private Channel channel;
 
-    private TextView channelMockTV;
+    private ImageView channelImageIV;
     private TextView channelNameTV;
     private TextView channelURLTV;
     private TextView channelSourceTV;
@@ -62,7 +60,7 @@ public class DetailChannelActivity extends AppCompatActivity {
     }
 
     private void setUpElements() {
-        channelMockTV = findViewById(R.id.channel_mock_detail_tv);
+        channelImageIV = findViewById(R.id.channel_image_detail_tv);
         channelNameTV = findViewById(R.id.channel_name_detail_tv);
         channelURLTV = findViewById(R.id.channel_url_detail_tv);
         channelSourceTV = findViewById(R.id.channel_source_detail_tv);
@@ -96,10 +94,21 @@ public class DetailChannelActivity extends AppCompatActivity {
                     loadVideo(source);
                 }
             });
-        } else {
-            channelSourceTV.setVisibility(View.GONE);
-            channelMockTV.setVisibility(View.VISIBLE);
         }
+
+        ImageRequest request = new ImageRequest(channel.getLogo(),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap bitmap) {
+                        channelImageIV.setImageBitmap(bitmap);
+                    }
+                }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null,
+                new Response.ErrorListener() {
+                    public void onErrorResponse(VolleyError error) {
+                        channelImageIV.setImageResource(R.drawable.ic_launcher_foreground);
+                    }
+                });
+        VolleyController.getInstance(this).addToQueue(request);
     }
 
     private void loadVideo(String streamURL) {
