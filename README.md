@@ -5,7 +5,6 @@ Aplicación oficial para la reproducción de los canales enlazados en el reposit
 Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChannels-APP/releases)
 
 ### Mejoras planificadas
-- Posibilidad de reproducir a pantalla completa.
 - Filtrado de canales.
 - Inclusión del EPG del canal.
 
