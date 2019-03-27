@@ -1,7 +1,6 @@
 package laquay.com.canalestdt;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -38,16 +37,14 @@ import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.Community;
 import laquay.com.canalestdt.model.Country;
 
-import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_MESSAGE;
-
-public class MainFragment extends Fragment implements APIController.ResponseServerCallback {
-    public static final String TAG = MainFragment.class.getSimpleName();
+public class RadioFragment extends Fragment implements APIController.ResponseServerCallback {
+    public static final String TAG = RadioFragment.class.getSimpleName();
     private View rootView;
     private GridView channelGridView;
     private CountryArrayAdapter arrayAdapter;
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public static RadioFragment newInstance() {
+        return new RadioFragment();
     }
 
     @Nullable
@@ -59,7 +56,7 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
         setUpElements();
         setUpListeners();
 
-        APIController.getInstance().loadChannels(false, getContext(), this);
+        APIController.getInstance().loadChannels(APIController.TypeOfRequest.RADIO, false, getContext(), this);
 
         return rootView;
     }
@@ -73,7 +70,7 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
     }
 
     @Override
-    public void onChannelLoadServer(ArrayList<Country> countries) {
+    public void onChannelsLoadServer(ArrayList<Country> countries) {
         Log.i(TAG, "Redrawing channels - Start");
 
         if (getContext() != null) {
@@ -194,10 +191,11 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d(TAG, "onClick " + filteredChannels.get(position).getChannel().getName());
+                    //TODO FIX
+                    /*Log.d(TAG, "onClick " + filteredChannels.get(position).getChannel().getName());
                     Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
                     intent.putExtra(EXTRA_MESSAGE, filteredChannels.get(position));
-                    startActivity(intent);
+                    startActivity(intent);*/
                 }
             });
 

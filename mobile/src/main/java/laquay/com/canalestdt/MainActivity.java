@@ -57,10 +57,11 @@ public class MainActivity extends AppCompatActivity
         String fragmentTAG = null;
 
         if (id == R.id.nav_tv_channels) {
-            fragment = MainFragment.newInstance();
-            fragmentTAG = MainFragment.TAG;
+            fragment = TVFragment.newInstance();
+            fragmentTAG = TVFragment.TAG;
         } else if (id == R.id.nav_radio_channels) {
-            Toast.makeText(this, getString(R.string.toast_function_not_implemented), Toast.LENGTH_SHORT).show();
+            fragment = RadioFragment.newInstance();
+            fragmentTAG = RadioFragment.TAG;
         } else if (id == R.id.nav_settings) {
             Toast.makeText(this, getString(R.string.toast_function_not_implemented), Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_about) {
