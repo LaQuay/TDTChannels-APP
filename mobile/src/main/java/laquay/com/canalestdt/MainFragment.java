@@ -21,8 +21,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -43,7 +43,7 @@ import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_MESSAGE;
 public class MainFragment extends Fragment implements APIController.ResponseServerCallback {
     public static final String TAG = MainFragment.class.getSimpleName();
     private View rootView;
-    private ListView channelListView;
+    private GridView channelGridView;
     private CountryArrayAdapter arrayAdapter;
 
     public static MainFragment newInstance() {
@@ -65,7 +65,7 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
     }
 
     private void setUpElements() {
-        channelListView = rootView.findViewById(R.id.channel_main_lv);
+        channelGridView = rootView.findViewById(R.id.channel_main_lv);
     }
 
     private void setUpListeners() {
@@ -93,7 +93,7 @@ public class MainFragment extends Fragment implements APIController.ResponseServ
             }
 
             arrayAdapter = new CountryArrayAdapter(getContext(), channelLists);
-            channelListView.setAdapter(arrayAdapter);
+            channelGridView.setAdapter(arrayAdapter);
             arrayAdapter.notifyDataSetChanged();
         }
 

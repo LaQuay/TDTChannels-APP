@@ -7,9 +7,10 @@
     android:paddingTop="?attr/actionBarSize"
     tools:context=".MainActivity">
 
-    <ListView
+    <GridView
         android:id="@+id/channel_main_lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:numColumns="2" />
 
 </LinearLayout>
