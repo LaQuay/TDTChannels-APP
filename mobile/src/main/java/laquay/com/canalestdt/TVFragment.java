@@ -39,6 +39,8 @@ import laquay.com.canalestdt.model.Community;
 import laquay.com.canalestdt.model.Country;
 
 import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_MESSAGE;
+import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_TYPE;
+import static laquay.com.canalestdt.DetailChannelActivity.TYPE_TV;
 
 public class TVFragment extends Fragment implements APIController.ResponseServerCallback {
     public static final String TAG = TVFragment.class.getSimpleName();
@@ -197,6 +199,7 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                     Log.d(TAG, "onClick " + filteredChannels.get(position).getChannel().getName());
                     Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
                     intent.putExtra(EXTRA_MESSAGE, filteredChannels.get(position));
+                    intent.putExtra(EXTRA_TYPE, TYPE_TV);
                     startActivity(intent);
                 }
             });

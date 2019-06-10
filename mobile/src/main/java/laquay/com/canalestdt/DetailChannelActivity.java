@@ -1,7 +1,8 @@
 package laquay.com.canalestdt;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -28,13 +30,18 @@ import laquay.com.canalestdt.model.ChannelOptions;
 public class DetailChannelActivity extends AppCompatActivity {
     public static final String TAG = DetailChannelActivity.class.getSimpleName();
     public static final String EXTRA_MESSAGE = "laquay.com.canalestdt.CHANNEL_DETAIL";
+    public static final String EXTRA_TYPE = "laquay.com.canalestdt.CHANNEL_TYPE";
+    public static final String TYPE_TV = "TV";
+    public static final String TYPE_RADIO = "RADIO";
     private Channel channel;
+    private String typeOfStream;
 
     private ImageView channelImageIV;
     private TextView channelNameTV;
     private TextView channelURLTV;
     private TextView channelSourceTV;
     private ListView channelSourceLV;
+    private MediaPlayer mediaPlayer; //TODO This should be moved to another Dialog/Fragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +54,15 @@ public class DetailChannelActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
-        Intent intent = getIntent();
-        ChannelList channelList = (ChannelList) intent.getSerializableExtra(EXTRA_MESSAGE);
-        channel = channelList.getChannel();
-
-        getSupportActionBar().setTitle(channelList.getChannel().getName());
+        Bundle intentExtras = getIntent().getExtras();
+        if (intentExtras != null) {
+            ChannelList channelList = (ChannelList) intentExtras.getSerializable(EXTRA_MESSAGE);
+            if (channelList != null) {
+                channel = channelList.getChannel();
+                getSupportActionBar().setTitle(channelList.getChannel().getName());
+            }
+            typeOfStream = intentExtras.getString(EXTRA_TYPE);
+        }
 
         setUpElements();
         setUpListeners();
@@ -91,7 +102,14 @@ public class DetailChannelActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String source = (String) channelSourceLV.getItemAtPosition(position);
-                    loadVideo(source);
+                    switch (typeOfStream) {
+                        case TYPE_TV:
+                            loadVideo(source);
+                            break;
+                        case TYPE_RADIO:
+                            loadRadio(source);
+                            break;
+                    }
                 }
             });
         }
@@ -116,8 +134,24 @@ public class DetailChannelActivity extends AppCompatActivity {
     }
 
     private void loadVideo(String streamURL) {
+        Toast.makeText(this, getString(R.string.channel_detail_reproducing_tv), Toast.LENGTH_SHORT).show();
         DialogFragment newFragment = VideoDialogFragment.newInstance(streamURL);
         newFragment.show(getSupportFragmentManager(), "VideoDialog");
+    }
+
+    private void loadRadio(String streamURL) {
+        Toast.makeText(this, getString(R.string.channel_detail_reproducing_radio), Toast.LENGTH_SHORT).show();
+        mediaPlayer = MediaPlayer.create(this, Uri.parse(streamURL));
+        mediaPlayer.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
     }
 
     @Override

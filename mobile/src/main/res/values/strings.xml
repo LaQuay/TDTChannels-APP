@@ -19,4 +19,7 @@
     <string name="about_app_license">Licenses</string>
     <string name="channel_detail_no_media_found">No media found</string>
     <string name="channel_detail_click_to_play">Click to play an option</string>
+
+    <string name="channel_detail_reproducing_tv">Reproducing TV Channel, media should start in short time (1 – 2 seconds)</string>
+    <string name="channel_detail_reproducing_radio">Reproducing Radio Channel, media should start in short time (2 – 5 seconds)</string>
 </resources>

@@ -7,6 +7,7 @@ Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChann
 ### Mejoras planificadas
 - Filtrado de canales.
 - Inclusión del EPG del canal.
+- Reproducción de radio en background, https://github.com/googlesamples/android-MediaBrowserService
 
 ### Licencia del proyecto
 Tal como indica la licencia MIT, cualquier persona puede hacer el uso que considere de este repositorio, el único condicionante es que se debe poder verse explícitamente que la información que está utilizando procede de este repositorio.

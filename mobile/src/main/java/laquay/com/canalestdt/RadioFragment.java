@@ -1,6 +1,7 @@
 package laquay.com.canalestdt;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -36,6 +37,10 @@ import laquay.com.canalestdt.controller.VolleyController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.Community;
 import laquay.com.canalestdt.model.Country;
+
+import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_MESSAGE;
+import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_TYPE;
+import static laquay.com.canalestdt.DetailChannelActivity.TYPE_RADIO;
 
 public class RadioFragment extends Fragment implements APIController.ResponseServerCallback {
     public static final String TAG = RadioFragment.class.getSimpleName();
@@ -191,11 +196,11 @@ public class RadioFragment extends Fragment implements APIController.ResponseSer
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO FIX
-                    /*Log.d(TAG, "onClick " + filteredChannels.get(position).getChannel().getName());
+                    Log.d(TAG, "onClick " + filteredChannels.get(position).getChannel().getName());
                     Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
                     intent.putExtra(EXTRA_MESSAGE, filteredChannels.get(position));
-                    startActivity(intent);*/
+                    intent.putExtra(EXTRA_TYPE, TYPE_RADIO);
+                    startActivity(intent);
                 }
             });
 
