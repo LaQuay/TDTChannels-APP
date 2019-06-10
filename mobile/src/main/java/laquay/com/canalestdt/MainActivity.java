@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)));
         } else if (id == R.id.nav_send_telegram) {
             try {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=canales_tdt"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=tdtchannels"));
                 startActivity(intent);
             } catch (Exception e) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/canales_tdt"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/tdtchannels"));
                 startActivity(intent);
             }
         }

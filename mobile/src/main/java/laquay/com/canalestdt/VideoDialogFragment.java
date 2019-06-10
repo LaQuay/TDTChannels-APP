@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -73,6 +74,15 @@ public class VideoDialogFragment extends DialogFragment {
         player.prepare(videoSource);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (getActivity() != null) {
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+    }
+
     // Activity onStop, player must be release because of memory saving
     @Override
     public void onStop() {
@@ -83,6 +93,8 @@ public class VideoDialogFragment extends DialogFragment {
             if (player != null) {
                 player.release();
             }
+
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
     }
 }
