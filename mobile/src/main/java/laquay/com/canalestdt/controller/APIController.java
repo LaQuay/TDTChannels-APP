@@ -6,7 +6,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +25,22 @@ public class APIController {
     private static APIController instance;
     private ArrayList<Country> televisionChannels;
     private ArrayList<Country> radioChannels;
+
+    private APIController() {
+    }
+
+    public static APIController getInstance() {
+        if (instance == null) {
+            createInstance();
+        }
+        return instance;
+    }
+
+    private synchronized static void createInstance() {
+        if (instance == null) {
+            instance = new APIController();
+        }
+    }
 
     public void loadChannels(TypeOfRequest typeOfRequest, boolean forceUpdate, final Context context, final ResponseServerCallback responseServerCallback) {
         if (typeOfRequest.equals(TypeOfRequest.TV)) {
@@ -50,79 +66,61 @@ public class APIController {
         }
     }
 
-    private APIController() {
-    }
-
-    public static APIController getInstance() {
-        if (instance == null) {
-            createInstance();
-        }
-        return instance;
-    }
-
-    private synchronized static void createInstance() {
-        if (instance == null) {
-            instance = new APIController();
-        }
-    }
-
     private void downloadChannels(final String URL, final ArrayList<Country> channelsToMatch, final Context context, final ResponseServerCallback responseServerCallback) {
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 URL,
                 null,
-                new Response.Listener<JSONArray>() {
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         Log.i(TAG, "Response OK");
 
                         try {
-                            for (int i = 0; i < response.length(); ++i) {
-                                JSONObject jsonElement = response.getJSONObject(i);
+                            JSONArray countriesJsonArray = response.getJSONArray("countries");
+                            for (int i = 0; i < countriesJsonArray.length(); ++i) {
+                                JSONObject country = countriesJsonArray.getJSONObject(i);
 
-                                boolean isCountry = jsonElement.has("name");
-                                if (isCountry) {
-                                    String countryName = jsonElement.getString("name");
-                                    JSONArray communitiesArray = jsonElement.getJSONArray("ambits");
-                                    ArrayList<Community> communities = new ArrayList<>();
+                                String countryName = country.getString("name");
+                                JSONArray communitiesArray = country.getJSONArray("ambits");
+                                ArrayList<Community> communities = new ArrayList<>();
 
-                                    for (int j = 0; j < communitiesArray.length(); ++j) {
-                                        JSONObject communityJson = communitiesArray.getJSONObject(j);
+                                for (int j = 0; j < communitiesArray.length(); ++j) {
+                                    JSONObject communityJson = communitiesArray.getJSONObject(j);
 
-                                        String communityName = communityJson.getString("name");
-                                        JSONArray channelsArray = communityJson.getJSONArray("channels");
-                                        ArrayList<Channel> channels = new ArrayList<>();
+                                    String communityName = communityJson.getString("name");
+                                    JSONArray channelsArray = communityJson.getJSONArray("channels");
+                                    ArrayList<Channel> channels = new ArrayList<>();
 
-                                        for (int k = 0; k < channelsArray.length(); ++k) {
-                                            JSONObject channelJson = channelsArray.getJSONObject(k);
+                                    for (int k = 0; k < channelsArray.length(); ++k) {
+                                        JSONObject channelJson = channelsArray.getJSONObject(k);
 
-                                            String channelName = channelJson.getString("name");
-                                            String channelWeb = channelJson.getString("web");
-                                            String channelLogo = channelJson.getString("logo");
-                                            String channelResolution = channelJson.getString("resolution");
-                                            String channelEPG = channelJson.getString("epg_id");
-                                            JSONArray channelOptionsJson = channelJson.getJSONArray("options");
-                                            ArrayList<ChannelOptions> channelOptions = new ArrayList<>();
-                                            String channelExtraInfo = channelJson.getString("extra_info");
+                                        String channelName = channelJson.getString("name");
+                                        String channelWeb = channelJson.getString("web");
+                                        String channelLogo = channelJson.getString("logo");
+                                        String channelResolution = channelJson.getString("resolution");
+                                        String channelEPG = channelJson.getString("epg_id");
+                                        JSONArray channelOptionsJson = channelJson.getJSONArray("options");
+                                        ArrayList<ChannelOptions> channelOptions = new ArrayList<>();
+                                        String channelExtraInfo = channelJson.getString("extra_info");
 
-                                            for (int z = 0; z < channelOptionsJson.length(); ++z) {
-                                                JSONObject optionJson = channelOptionsJson.getJSONObject(z);
+                                        for (int z = 0; z < channelOptionsJson.length(); ++z) {
+                                            JSONObject optionJson = channelOptionsJson.getJSONObject(z);
 
-                                                String optionFormat = optionJson.getString("format");
-                                                String optionURL = optionJson.getString("url");
+                                            String optionFormat = optionJson.getString("format");
+                                            String optionURL = optionJson.getString("url");
 
-                                                channelOptions.add(new ChannelOptions(optionFormat, optionURL, channelResolution));
-                                            }
-
-                                            Channel channel = new Channel(channelName, channelWeb, channelLogo,
-                                                    channelEPG, channelOptions, channelExtraInfo);
-                                            //Log.i(TAG, "Adding channel: " + channel.toString());
-                                            channels.add(channel);
+                                            channelOptions.add(new ChannelOptions(optionFormat, optionURL, channelResolution));
                                         }
-                                        communities.add(new Community(communityName, channels));
+
+                                        Channel channel = new Channel(channelName, channelWeb, channelLogo,
+                                                channelEPG, channelOptions, channelExtraInfo);
+                                        //Log.i(TAG, "Adding channel: " + channel.toString());
+                                        channels.add(channel);
                                     }
-                                    channelsToMatch.add(new Country(countryName, communities));
+                                    communities.add(new Community(communityName, channels));
                                 }
+                                channelsToMatch.add(new Country(countryName, communities));
                             }
 
                             responseServerCallback.onChannelsLoadServer(channelsToMatch);
@@ -142,7 +140,7 @@ public class APIController {
         );
 
         // Add JsonArrayRequest to the RequestQueue
-        VolleyController.getInstance(context).addToQueue(jsonArrayRequest);
+        VolleyController.getInstance(context).addToQueue(jsonObjectRequest);
     }
 
     public enum TypeOfRequest {
