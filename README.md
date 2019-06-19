@@ -5,7 +5,9 @@ Aplicación oficial para la reproducción de los canales enlazados en el reposit
 Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChannels-APP/releases)
 
 ### Mejoras planificadas
+- Reproducción automática de un canal.
 - Filtrado de canales.
+- Guardad de canales.
 - Inclusión del EPG del canal.
 - Reproducción de radio en background, https://github.com/googlesamples/android-MediaBrowserService
 
