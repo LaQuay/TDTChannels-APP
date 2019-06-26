@@ -7,9 +7,12 @@ Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChann
 ### Mejoras planificadas
 - Reproducción automática de un canal.
 - Filtrado de canales.
-- Guardad de canales.
+- Guardado de canales.
+- Reproducción de radio en background (https://github.com/googlesamples/android-MediaBrowserService)
 - Inclusión del EPG del canal.
-- Reproducción de radio en background, https://github.com/googlesamples/android-MediaBrowserService
+
+### Noticias
+*06/2019* - [El Androide Libre - La mejor app para ver la tele en tu Android y la más actualizada](https://elandroidelibre.elespanol.com/2019/06/mejor-app-ver-tele-android-mas-actualizada-apk.html)
 
 ### Licencia del proyecto
 Tal como indica la licencia MIT, cualquier persona puede hacer el uso que considere de este repositorio, el único condicionante es que se debe poder verse explícitamente que la información que está utilizando procede de este repositorio.
