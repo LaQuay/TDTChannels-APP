@@ -10,6 +10,7 @@ Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChann
 - Guardado de canales.
 - Reproducción de radio en background (https://github.com/googlesamples/android-MediaBrowserService)
 - Inclusión del EPG del canal.
+- Temporizador de pantalla.
 
 ### Noticias
 *06/2019* - [El Androide Libre - La mejor app para ver la tele en tu Android y la más actualizada](https://elandroidelibre.elespanol.com/2019/06/mejor-app-ver-tele-android-mas-actualizada-apk.html)
