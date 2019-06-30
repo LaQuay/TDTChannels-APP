@@ -23,7 +23,7 @@
 
     <string name="channel_detail_no_media_found">Non se atoparon medios</string>
     <string name="channel_detail_click_to_play">Fai clic para xogar</string>
-    <string name="channel_detail_reproducing_tv">Reproducindo unha canle de TV, debería comezar en poucos segundos</string>
+    <string name="channel_detail_reproducing_tv">Reproducindo unha canle de TV, debería comezar uns segundos</string>
     <string name="channel_detail_reproducing_radio">Reproducindo unha emisora de radio, debería comezar uns segundos</string>
 
     <string name="toast_function_not_implemented">Aínda non se implementou</string>
