@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">TDTChannels</string>
+
+    <string name="nav_header_title">TDTChannels</string>
+    <string name="action_search">Buscar</string>
+    <string name="nav_tv_channels">TV</string>
+    <string name="nav_radio_channels">Radio</string>
+    <string name="nav_tools">Ajustes</string>
+
+    <string name="about_social_networks">Redes Sociales</string>
+    <string name="about_share">Comparte TDTChannels</string>
+    <string name="about_telegram">Telegram</string>
+    <string name="about_main_repo">Repositorio</string>
+    <string name="about_main_repo_source">Repositorio fuente</string>
+    <string name="about_author">Desarrollador @LaQuay</string>
+    <string name="about_app_info">Open source. Código, Autores y Licencia disponibles en el repositorio.</string>
+    <string name="about_tv_and_radio_title">Canales y estaciones de radio</string>
+    <string name="about_tv_and_radio">Alguna emisora no funciona?\nReporta aquí por favor.</string>
+    <string name="about_app_improvement_title">Aplicación Android</string>
+    <string name="about_app_improvement">Algo a mejorar?\nEscríbenos!.</string>
+    <string name="about_app_license">Licencias</string>
+
+    <string name="channel_detail_no_media_found">Medios no encontrados</string>
+    <string name="channel_detail_click_to_play">Click para reproducir</string>
+    <string name="channel_detail_reproducing_tv">Reproduciendo un canal de TV, debería empezar en unos segundos</string>
+    <string name="channel_detail_reproducing_radio">Reproduciendo un canal de Radio, debería empezar en unos segundos</string>
+
+    <string name="toast_function_not_implemented">Todavía no implementado</string>
+</resources>
