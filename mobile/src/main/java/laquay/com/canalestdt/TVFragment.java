@@ -1,8 +1,10 @@
 package laquay.com.canalestdt;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,8 +12,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,10 +23,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -33,6 +39,7 @@ import java.util.ArrayList;
 
 import laquay.com.canalestdt.component.ChannelList;
 import laquay.com.canalestdt.controller.APIController;
+import laquay.com.canalestdt.controller.SharedPreferencesController;
 import laquay.com.canalestdt.controller.VolleyController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.Community;
@@ -47,6 +54,9 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
     private View rootView;
     private GridView channelGridView;
     private CountryArrayAdapter arrayAdapter;
+    private ArrayList<Country> countries;
+    private ArrayList<Community> communities;
+    private ArrayList<ChannelList> channelLists;
 
     public static TVFragment newInstance() {
         return new TVFragment();
@@ -77,34 +87,45 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
     @Override
     public void onChannelsLoadServer(ArrayList<Country> countries) {
         Log.i(TAG, "Redrawing channels - Start");
+        this.countries = countries;
 
-        if (getContext() != null) {
-            ArrayList<ChannelList> channelLists = new ArrayList<>();
+        createChannelList();
 
-            for (int i = 0; i < countries.size(); ++i) {
-                ArrayList<Community> communities = countries.get(i).getCommunities();
+        drawSelectedChannelLists();
 
-                for (int j = 0; j < communities.size(); ++j) {
-                    ArrayList<Channel> channels = communities.get(j).getChannels();
+        Log.i(TAG, "Redrawing channels - End");
+    }
 
+    private void createChannelList() {
+        channelLists = new ArrayList<>();
+        for (int i = 0; i < countries.size(); ++i) {
+            communities = countries.get(i).getCommunities();
+
+            for (int j = 0; j < communities.size(); ++j) {
+                ArrayList<Channel> channels = communities.get(j).getChannels();
+
+                boolean isCommunityShown = SharedPreferencesController.getInstance().getValue("" + communities.get(j).getName(), Boolean.class, true);
+                if (isCommunityShown) {
                     for (int k = 0; k < channels.size(); ++k) {
                         channelLists.add(new ChannelList(countries.get(i).getName(),
                                 communities.get(j).getName(), channels.get(k)));
                     }
                 }
             }
+        }
+    }
 
+    private void drawSelectedChannelLists() {
+        if (getContext() != null) {
             arrayAdapter = new CountryArrayAdapter(getContext(), channelLists);
             channelGridView.setAdapter(arrayAdapter);
             arrayAdapter.notifyDataSetChanged();
         }
-
-        Log.i(TAG, "Redrawing channels - End");
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        menuInflater.inflate(R.menu.fragment_main, menu);
+        menuInflater.inflate(R.menu.fragment_tv, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         // Change color of the search button
@@ -130,6 +151,114 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_filter:
+                if (getContext() != null) {
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(getContext());
+                    View v = getActivity().getLayoutInflater().inflate(R.layout.alert_filter_channels, null);
+
+                    final LinearLayout filterLL = v.findViewById(R.id.filters_alert_filter_channel_ll);
+
+                    for (int i = 0; i < countries.size(); ++i) {
+                        communities = countries.get(i).getCommunities();
+
+                        TextView country = new TextView(getActivity());
+                        country.setText(countries.get(i).getName());
+                        country.setTextSize(18);
+                        country.setPadding(0, 0, 0, 0);
+                        country.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                        LinearLayout.LayoutParams countryParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        if (i == 0) {
+                            countryParams.setMargins(0, 0, 0, 10);
+                        } else {
+                            countryParams.setMargins(0, 20, 0, 10);
+                        }
+                        country.setLayoutParams(countryParams);
+                        filterLL.addView(country);
+
+                        LinearLayout rootLayout = new LinearLayout(getContext());
+                        rootLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        rootLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+                        LinearLayout leftLayout = new LinearLayout(getContext());
+                        leftLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+                        leftLayout.setOrientation(LinearLayout.VERTICAL);
+
+                        LinearLayout rightLayout = new LinearLayout(getContext());
+                        rightLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+                        rightLayout.setOrientation(LinearLayout.VERTICAL);
+
+                        for (int j = 0; j < communities.size(); ++j) {
+                            boolean isCommunityShown = SharedPreferencesController.getInstance().getValue("" + communities.get(j).getName(), Boolean.class, true);
+
+                            CheckBox community = new CheckBox(getActivity());
+                            community.setText(communities.get(j).getName());
+                            community.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+                            community.setChecked(isCommunityShown);
+                            community.setMaxLines(1);
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                            params.gravity = Gravity.NO_GRAVITY;
+                            community.setLayoutParams(params);
+
+                            if (j % 2 == 0) {
+                                leftLayout.addView(community);
+                            } else {
+                                rightLayout.addView(community);
+                            }
+                        }
+
+                        rootLayout.addView(leftLayout);
+                        if (rightLayout.getChildCount() > 0) {
+                            rootLayout.addView(rightLayout);
+                        }
+                        filterLL.addView(rootLayout);
+                    }
+                    builder.setView(v);
+                    builder.create();
+                    builder.setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            filterLL.getChildCount();
+
+                            for (int i = 0; i < filterLL.getChildCount(); ++i) {
+                                if (filterLL.getChildAt(i) instanceof LinearLayout) {
+                                    LinearLayout linearLayout = (LinearLayout) filterLL.getChildAt(i);
+
+                                    for (int j = 0; j < linearLayout.getChildCount(); ++j) {
+                                        if (linearLayout.getChildAt(j) instanceof LinearLayout) {
+                                            LinearLayout columnLayout = (LinearLayout) linearLayout.getChildAt(j);
+
+                                            for (int z = 0; z < columnLayout.getChildCount(); ++z) {
+                                                if (columnLayout.getChildAt(z) instanceof CheckBox) {
+                                                    CheckBox checkBox = (CheckBox) columnLayout.getChildAt(z);
+                                                    // TODO This should be inside a "lib"/"controller"
+                                                    SharedPreferencesController.getInstance().putValue("" + checkBox.getText(), checkBox.isChecked());
+
+                                                    createChannelList();
+                                                    drawSelectedChannelLists();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    builder.setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    builder.show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public class CountryArrayAdapter extends ArrayAdapter<ChannelList> implements Filterable {
@@ -172,7 +301,7 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
 
             holder.titleView.setText(filteredChannels.get(position).getChannel().getName());
             holder.subtitleView.setText(filteredChannels.get(position).getCountryName() + " - " + filteredChannels.get(position).getCommunityName());
-            holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+            holder.imageView.setImageResource(R.mipmap.ic_launcher);
 
             // Temporary fix
             String imageUrl = filteredChannels.get(position).getChannel().getLogo();
@@ -188,7 +317,7 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                     }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null,
                     new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
-                            finalHolder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+                            finalHolder.imageView.setImageResource(R.mipmap.ic_launcher);
                         }
                     });
             VolleyController.getInstance(getContext()).addToQueue(request);

@@ -2,6 +2,7 @@
     <string name="app_name">TDTChannels</string>
 
     <string name="nav_header_title">TDTChannels</string>
+    <string name="action_filter">Filter</string>
     <string name="action_search">Search</string>
     <string name="nav_tv_channels">TV</string>
     <string name="nav_radio_channels">Radio</string>
@@ -26,4 +27,6 @@
     <string name="channel_detail_reproducing_radio">Reproducing Radio Channel, media should start in short time (2 – 5 seconds)</string>
 
     <string name="toast_function_not_implemented">Function not implemented</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="alert_dialog_ok">OK</string>
 </resources>

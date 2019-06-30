@@ -127,7 +127,7 @@ public class DetailChannelActivity extends AppCompatActivity {
                 }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null,
                 new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                        channelImageIV.setImageResource(R.drawable.ic_launcher_foreground);
+                        channelImageIV.setImageResource(R.mipmap.ic_launcher);
                     }
                 });
         VolleyController.getInstance(this).addToQueue(request);

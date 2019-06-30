@@ -104,7 +104,7 @@ public class RadioFragment extends Fragment implements APIController.ResponseSer
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        menuInflater.inflate(R.menu.fragment_main, menu);
+        menuInflater.inflate(R.menu.fragment_radio, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         // Change color of the search button
@@ -172,7 +172,7 @@ public class RadioFragment extends Fragment implements APIController.ResponseSer
 
             holder.titleView.setText(filteredChannels.get(position).getChannel().getName());
             holder.subtitleView.setText(filteredChannels.get(position).getCountryName() + " - " + filteredChannels.get(position).getCommunityName());
-            holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+            holder.imageView.setImageResource(R.mipmap.ic_launcher);
 
             // Temporary fix
             String imageUrl = filteredChannels.get(position).getChannel().getLogo();
@@ -188,7 +188,7 @@ public class RadioFragment extends Fragment implements APIController.ResponseSer
                     }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null,
                     new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
-                            finalHolder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+                            finalHolder.imageView.setImageResource(R.mipmap.ic_launcher);
                         }
                     });
             VolleyController.getInstance(getContext()).addToQueue(request);
