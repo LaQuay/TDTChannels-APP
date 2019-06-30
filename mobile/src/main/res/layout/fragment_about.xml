@@ -3,31 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    android:layout_marginTop="?attr/actionBarSize"
     android:background="@color/grey_100"
     android:fillViewport="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingTop="?attr/actionBarSize"
+    android:padding="20dp"
     tools:context=".MainActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
+        android:id="@+id/fragment_about_version_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:textSize="16sp" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
-        android:text="@string/app_name" />
+        android:text="@string/app_name"
+        android:textSize="18sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autoLink="web"
         android:text="https://github.com/LaQuay/TDTChannels" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:text="TDT Channels APP"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text="https://github.com/LaQuay/TDTChannels-APP" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,42 +60,29 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
         android:paddingTop="20dp"
         android:text="@string/about_app_license"
         android:textSize="16sp" />
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="Volley" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Volley" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Exoplayer" />
-            </LinearLayout>
+                android:text="Exoplayer" />
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

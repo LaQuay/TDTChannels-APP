@@ -15,7 +15,7 @@
     <string name="nav_telegram">Telegram</string>
     <string name="toast_function_not_implemented">Function not implemented</string>
     <string name="share_using">Share using</string>
-    <string name="about_app_info">Open source application\nLicense can be found in the repository.</string>
+    <string name="about_app_info">Open source\nAuthors and License\ncan be found in the repository.</string>
     <string name="about_app_license">Licenses</string>
     <string name="channel_detail_no_media_found">No media found</string>
     <string name="channel_detail_click_to_play">Click to play an option</string>
