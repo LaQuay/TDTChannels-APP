@@ -72,6 +72,7 @@ public class VideoDialogFragment extends DialogFragment {
 
         // Prepare the player with the source.
         player.prepare(videoSource);
+        player.setPlayWhenReady(true);
     }
 
     @Override
