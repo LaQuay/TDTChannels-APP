@@ -1,15 +1,23 @@
 # TDTChannels-APP
 Aplicación oficial para la reproducción de los canales enlazados en el repositorio [TDTChannels](https://github.com/LaQuay/TDTChannels/). 
 
-### Descarga
-Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChannels-APP/releases)
+### Funciones principales
+- Reproductor de vídeo
+  - Filtrado de canales
+- Reproductor de audio
 
-### Mejoras planificadas
+### Mejoras futuras
 - Añadir opción de marcar / desmarcar todos en filtrado de canales.
 - Canales Favoritos.
 - Reproducción de radio en background (https://github.com/googlesamples/android-MediaBrowserService)
 - Inclusión del EPG del canal.
 - Temporizador de pantalla.
+- Soporte a Chromecast.
+
+### Descarga
+Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChannels-APP/releases)
+
+<img src="https://nisifilters.com.au/wp-content/uploads/sites/10/2018/03/Play-Store-Logo-2.png" alt="drawing" width="150"/>
 
 ### Noticias
 *06/2019* - [El Androide Libre - La mejor app para ver la tele en tu Android y la más actualizada](https://elandroidelibre.elespanol.com/2019/06/mejor-app-ver-tele-android-mas-actualizada-apk.html)
