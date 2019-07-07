@@ -5,9 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatTextView;
+
 import laquay.com.canalestdt.R;
 
-public class AboutTitleTextView extends android.support.v7.widget.AppCompatTextView {
+public class AboutTitleTextView extends AppCompatTextView {
 
     public AboutTitleTextView(Context context) {
         super(context);
