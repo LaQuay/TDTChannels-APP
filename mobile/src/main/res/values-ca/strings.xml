@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">TDTChannels</string>
+
+    <string name="nav_header_title">TDTChannels</string>
+    <string name="action_filter">Filtre</string>
+    <string name="action_search">Cerca</string>
+    <string name="nav_tv_channels">TV</string>
+    <string name="nav_radio_channels">Ràdio</string>
+    <string name="nav_tools">Configuració</string>
+
+    <string name="about_social_networks">Xarxes Socials</string>
+    <string name="about_share">Comparteix TDTChannels</string>
+    <string name="about_telegram">Telegram</string>
+    <string name="about_main_repo">Repositori</string>
+    <string name="about_main_repo_source">Repositori font</string>
+    <string name="about_author">Desenvolupador @LaQuay</string>
+    <string name="about_app_info">Open source. Codi, Autors i Llicència disponibles al repositori.</string>
+    <string name="about_tv_and_radio_title">Canals i emissores de ràdio</string>
+    <string name="about_tv_and_radio">Alguna estació no funciona?\nReporta aquí si us plau.</string>
+    <string name="about_app_improvement_title">Aplicació Android</string>
+    <string name="about_app_improvement">Alguna cosa a millorar?\nEscriu-nos!</string>
+    <string name="about_app_license">Llicències</string>
+
+    <string name="channel_detail_no_media_found">Mitjans no trobats</string>
+    <string name="channel_detail_click_to_play">Click per reproduir</string>
+    <string name="channel_detail_reproducing_tv">Reproduint un canal de TV, hauria de començar en uns segons</string>
+    <string name="channel_detail_reproducing_radio">Reproduint una emissora de Ràdio, hauria de començar en uns segons</string>
+
+    <string name="toast_function_not_implemented">Encara no implementat</string>
+    <string name="alert_dialog_cancel">Cancel·lar</string>
+    <string name="alert_dialog_ok">Acceptar</string>
+</resources>
