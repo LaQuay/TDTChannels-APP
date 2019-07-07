@@ -15,9 +15,13 @@ Aplicación oficial para la reproducción de los canales enlazados en el reposit
 - Soporte a Chromecast.
 
 ### Descarga
-Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChannels-APP/releases)
+Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChannels-APP/releases), desde GitHub.
 
-<img src="https://nisifilters.com.au/wp-content/uploads/sites/10/2018/03/Play-Store-Logo-2.png" alt="drawing" width="150"/>
+O bien desde la Google Play Store.
+
+<a href="https://play.google.com/store/apps/details?id=laquay.com.canalestdt">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="drawing" width="200"/>
+</a>
 
 ### Noticias
 *06/2019* - [El Androide Libre - La mejor app para ver la tele en tu Android y la más actualizada](https://elandroidelibre.elespanol.com/2019/06/mejor-app-ver-tele-android-mas-actualizada-apk.html)
