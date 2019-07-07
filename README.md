@@ -15,7 +15,7 @@ Aplicación oficial para la reproducción de los canales enlazados en el reposit
 - Soporte a Chromecast.
 
 ### Descarga
-Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChannels-APP/releases), desde GitHub.
+Podéis encontrar la última versión [desde GitHub](https://github.com/LaQuay/TDTChannels-APP/releases).
 
 O bien desde la Google Play Store.
 
