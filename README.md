@@ -20,7 +20,7 @@ Podéis encontrar la última versión [aquí](https://github.com/LaQuay/TDTChann
 O bien desde la Google Play Store.
 
 <a href="https://play.google.com/store/apps/details?id=laquay.com.canalestdt">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="drawing" width="200"/>
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" target="_blank" width="200"/>
 </a>
 
 ### Noticias
