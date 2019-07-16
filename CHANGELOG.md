@@ -1,3 +1,7 @@
+## [UNRELEASED]
+- Solucionado el error que hacía que las imágenes de los canales / emisoras se vieran de forma aleatoria.
+- Añadida más información en caso de haber algún error con la reproducción de algúna canal de vídeo.
+
 ## v0.5.1 - 2019-07-07
 - Migración del código de las librerias de soporte de Android a Android X.
 - Actualización del reproductor de vídeo. (Exoplayer 2.9.6 a 2.10.2)
