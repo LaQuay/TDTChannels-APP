@@ -3,14 +3,18 @@ package laquay.com.canalestdt;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
@@ -18,7 +22,8 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-public class VideoDialogFragment extends DialogFragment {
+public class VideoDialogFragment extends DialogFragment implements Player.EventListener {
+    public static final String TAG = VideoDialogFragment.class.getSimpleName();
     private static final String CHANNEL_KEY = "CHANNEL_URL";
     private SimpleExoPlayer player;
     private PlayerView channelVideoView;
@@ -64,8 +69,10 @@ public class VideoDialogFragment extends DialogFragment {
     }
 
     public void loadVideo(String streamURL) {
-        //channelSourceTV.setText(getString(R.string.channel_detail_currenty_playing) + " - Source: " + (sourceNumber + 1));
         channelVideoView.setPlayer(player);
+
+        // Add listener for onPlayerError
+        player.addListener(this);
 
         // This is the MediaSource representing the media to be played.
         MediaSource videoSource = new HlsMediaSource.Factory(dataSourceFactory)
@@ -97,6 +104,33 @@ public class VideoDialogFragment extends DialogFragment {
             }
 
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+    }
+
+    @Override
+    public void onPlayerError(ExoPlaybackException error) {
+        if (getContext() != null) {
+            switch (error.type) {
+                case ExoPlaybackException.TYPE_SOURCE:
+                    Toast.makeText(getContext(), getContext().getString(R.string.channel_detail_source_error_message), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "TYPE_SOURCE: " + error.getSourceException().getMessage());
+                    break;
+                case ExoPlaybackException.TYPE_RENDERER:
+                    Toast.makeText(getContext(), getContext().getString(R.string.channel_detail_renderer_error_message), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "TYPE_RENDERER: " + error.getRendererException().getMessage());
+                    break;
+                case ExoPlaybackException.TYPE_UNEXPECTED:
+                    Toast.makeText(getContext(), getContext().getString(R.string.channel_detail_unexpected_error_message), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "TYPE_UNEXPECTED: " + error.getUnexpectedException().getMessage());
+                    break;
+                default:
+                    Toast.makeText(getContext(), getContext().getString(R.string.channel_detail_unexpected_error_message), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "TYPE_UNKNOWN: " + error.getCause().getMessage());
+            }
+        }
+
+        if (getActivity() != null) {
+            getActivity().onBackPressed();
         }
     }
 }

@@ -26,6 +26,10 @@
     <string name="channel_detail_reproducing_tv">Reproducing TV Channel, media should start in short time (1 – 2 seconds)</string>
     <string name="channel_detail_reproducing_radio">Reproducing Radio Station, media should start in short time (2 – 5 seconds)</string>
 
+    <string name="channel_detail_source_error_message">Source is not available</string>
+    <string name="channel_detail_renderer_error_message">Video codec not compatible</string>
+    <string name="channel_detail_unexpected_error_message">Unexpected error</string>
+
     <string name="toast_function_not_implemented">Function not implemented</string>
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="alert_dialog_ok">OK</string>

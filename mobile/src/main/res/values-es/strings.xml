@@ -26,6 +26,10 @@
     <string name="channel_detail_reproducing_tv">Reproduciendo un canal de TV, debería empezar en unos segundos</string>
     <string name="channel_detail_reproducing_radio">Reproduciendo una emisora de Radio, debería empezar en unos segundos</string>
 
+    <string name="channel_detail_source_error_message">Fuente no disponible</string>
+    <string name="channel_detail_renderer_error_message">Códec de vídeo no compatible</string>
+    <string name="channel_detail_unexpected_error_message">Error inesperado</string>
+
     <string name="toast_function_not_implemented">Todavía no implementado</string>
     <string name="alert_dialog_cancel">Cancelar</string>
     <string name="alert_dialog_ok">Aceptar</string>

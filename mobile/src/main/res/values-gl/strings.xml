@@ -26,6 +26,10 @@
     <string name="channel_detail_reproducing_tv">Reproducindo unha canle de TV, debería comezar uns segundos</string>
     <string name="channel_detail_reproducing_radio">Reproducindo unha emisora de radio, debería comezar uns segundos</string>
 
+    <string name="channel_detail_source_error_message">Fonte non dispoñible</string>
+    <string name="channel_detail_renderer_error_message">Codec de vídeo non soportado</string>
+    <string name="channel_detail_unexpected_error_message">Erro inesperado</string>
+
     <string name="toast_function_not_implemented">Aínda non se implementou</string>
     <string name="alert_dialog_cancel">Cancelar</string>
     <string name="alert_dialog_ok">Aceptar</string>
