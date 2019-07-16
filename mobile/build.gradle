@@ -6,8 +6,8 @@ android {
         applicationId "laquay.com.canalestdt"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 7
-        versionName "0.5.1"
+        versionCode 8
+        versionName "0.5.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -32,6 +32,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'com.android.volley:volley:1.1.1'
-    implementation 'com.google.android.exoplayer:exoplayer:2.10.2'
+    implementation 'com.google.android.exoplayer:exoplayer:2.10.3'
     implementation 'com.google.code.gson:gson:2.8.5'
 }
