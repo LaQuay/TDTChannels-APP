@@ -208,6 +208,16 @@ public class RadioFragment extends Fragment implements APIController.ResponseSer
             return convertView;
         }
 
+        @Override
+        public int getViewTypeCount() {
+            return getCount();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
+
         private class ItemFilter extends Filter {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
