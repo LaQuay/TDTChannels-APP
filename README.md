@@ -16,12 +16,7 @@ Aplicación oficial para la reproducción de los canales enlazados en el reposit
 
 ### Descarga
 Podéis encontrar la última versión [desde GitHub](https://github.com/LaQuay/TDTChannels-APP/releases).
-
-O bien desde la Google Play Store.
-
-<a href="https://play.google.com/store/apps/details?id=laquay.com.canalestdt">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" target="_blank" width="200"/>
-</a>
+*Por disconformidades con Google Play esta aplicación no aparecerá en su mercado de aplicaciones.*
 
 ### Noticias
 *06/2019* - [El Androide Libre - La mejor app para ver la tele en tu Android y la más actualizada](https://elandroidelibre.elespanol.com/2019/06/mejor-app-ver-tele-android-mas-actualizada-apk.html)
