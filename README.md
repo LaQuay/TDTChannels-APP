@@ -13,7 +13,6 @@ Aplicación oficial para la reproducción de los canales enlazados en el reposit
 - Inclusión del EPG del canal.
 - Temporizador de pantalla.
 - Soporte a Chromecast.
-- Probar retrocompatiblidad a Android 4.4
 
 ### Descarga
 Podéis encontrar la última versión [desde GitHub](https://github.com/LaQuay/TDTChannels-APP/releases).
