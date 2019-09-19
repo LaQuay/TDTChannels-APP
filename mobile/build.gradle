@@ -4,10 +4,10 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "laquay.com.canalestdt"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 8
-        versionName "0.5.2"
+        versionName "0.5.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -23,7 +23,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

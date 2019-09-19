@@ -13,7 +13,8 @@
     <string name="about_telegram">Telegram</string>
     <string name="about_main_repo">Repository</string>
     <string name="about_main_repo_source">Source Repository</string>
-    <string name="about_author">Development by @LaQuay</string>
+    <string name="about_author">Development @LaQuay</string>
+    <string name="about_design">Design @playzzz</string>
     <string name="about_app_info">Open source. Code, Authors and License can be found in the repository.</string>
     <string name="about_tv_and_radio_title">Channels and radio stations</string>
     <string name="about_tv_and_radio">Some channel or radio does not work?\nReport here please.</string>
