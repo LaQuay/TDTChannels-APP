@@ -7,7 +7,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 8
-        versionName "0.5.3"
+        versionName "0.5.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -32,6 +32,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'com.android.volley:volley:1.1.1'
-    implementation 'com.google.android.exoplayer:exoplayer:2.10.3'
+    implementation 'com.google.android.exoplayer:exoplayer:2.10.4'
     implementation 'com.google.code.gson:gson:2.8.5'
 }
