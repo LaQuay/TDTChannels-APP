@@ -35,8 +35,7 @@ Si localizas algún fallo, o deseas añadir otra funcionalidad, puedes contactar
 
 [Guidelines de código](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
 
-### Agradecimientos
+### Autores
 - Marc Vila (@LaQuay)
 - Pau (@playzzz)
 - Eliseo Juan (@eliseo-juan)
-
