@@ -1,22 +1,37 @@
 <resources>
     <string name="app_name">TDTChannels</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">TDTChannels</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_filter">Filter</string>
     <string name="action_search">Search</string>
-    <string name="nav_tv_channels">TV Channels</string>
-    <string name="nav_radio_channels">Radio Channels</string>
-    <string name="nav_tools">Tools</string>
-    <string name="nav_about">About</string>
-    <string name="nav_share">Share</string>
-    <string name="nav_telegram">Telegram</string>
-    <string name="toast_function_not_implemented">Function not implemented</string>
-    <string name="share_using">Share using</string>
-    <string name="about_app_info">Open source application\nLicense can be found in the repository.</string>
+    <string name="nav_tv_channels">TV</string>
+    <string name="nav_radio_channels">Radio</string>
+    <string name="nav_tools">Settings</string>
+
+    <string name="about_social_networks">Social Networks</string>
+    <string name="about_share">Share TDTChannels</string>
+    <string name="about_telegram">Telegram</string>
+    <string name="about_main_repo">Repository</string>
+    <string name="about_main_repo_source">Source Repository</string>
+    <string name="about_author">Development @LaQuay</string>
+    <string name="about_design">Design @playzzz</string>
+    <string name="about_app_info">Open source. Code, Authors and License can be found in the repository.</string>
+    <string name="about_tv_and_radio_title">Channels and radio stations</string>
+    <string name="about_tv_and_radio">Some channel or radio does not work?\nReport here please.</string>
+    <string name="about_app_improvement_title">Android Application</string>
+    <string name="about_app_improvement">Something to improve?\nReport here please.</string>
     <string name="about_app_license">Licenses</string>
+
     <string name="channel_detail_no_media_found">No media found</string>
-    <string name="channel_detail_currenty_playing">Currently playing</string>
+    <string name="channel_detail_click_to_play">Click to play an option</string>
+    <string name="channel_detail_reproducing_tv">Reproducing TV Channel, media should start in short time (1 – 2 seconds)</string>
+    <string name="channel_detail_reproducing_radio">Reproducing Radio Station, media should start in short time (2 – 5 seconds)</string>
+
+    <string name="channel_detail_source_error_message">Source is not available</string>
+    <string name="channel_detail_renderer_error_message">Video codec not compatible</string>
+    <string name="channel_detail_unexpected_error_message">Unexpected error</string>
+
+    <string name="toast_function_not_implemented">Function not implemented</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="alert_dialog_ok">OK</string>
 </resources>

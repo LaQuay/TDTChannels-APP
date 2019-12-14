@@ -1,42 +1,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dp">
+    android:clipToPadding="false"
+    android:paddingLeft="5dp"
+    android:paddingTop="6dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="6dp">
 
-    <ImageView
-        android:id="@+id/channel_icon"
-        android:layout_width="48dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="10dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_launcher_foreground" />
+        android:background="@drawable/channel_item_background"
+        android:elevation="3dp">
 
-    <TextView
-        android:id="@+id/channel_description"
-        android:layout_width="fill_parent"
-        android:layout_height="26dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/channel_icon"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Description"
-        android:textSize="12sp" />
+        <ImageView
+            android:id="@+id/channel_icon"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/ic_launcher" />
 
-    <TextView
-        android:id="@+id/channel_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/channel_description"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/channel_icon"
-        android:gravity="center_vertical"
-        android:text="Example application"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/channel_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/channel_description"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/channel_icon"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:text="Example application"
+            android:textSize="17sp" />
 
+        <TextView
+            android:id="@+id/channel_description"
+            android:layout_width="fill_parent"
+            android:layout_height="26dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/channel_icon"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:text="Description"
+            android:textSize="12sp" />
+    </RelativeLayout>
 </RelativeLayout>
