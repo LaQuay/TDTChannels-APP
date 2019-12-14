@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="4dp"
+    android:layout_margin="4dp"
     android:focusable="true"
-    android:layout_margin="4dp">
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,8 +27,8 @@
             android:id="@+id/channel_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintBottom_toTopOf="@+id/channel_description"
             app:layout_constraintLeft_toRightOf="@+id/channel_icon"
@@ -41,8 +41,8 @@
             android:id="@+id/channel_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:ellipsize="marquee"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"

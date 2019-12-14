@@ -113,7 +113,7 @@ public class SettingsFragment extends Fragment {
         try {
             PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
 
-            appVersionTV.setText(getString(R.string.app_name) + " - Version " + pInfo.versionName);
+            appVersionTV.setText(getString(R.string.app_name) + " - " + pInfo.versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
