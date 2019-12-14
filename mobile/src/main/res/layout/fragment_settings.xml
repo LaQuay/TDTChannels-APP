@@ -14,6 +14,15 @@
         android:paddingEnd="20dp"
         android:paddingBottom="20dp">
 
+        <TextView
+            android:id="@+id/fragment_about_version_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="15dp"
+            android:text="TDTChannels - Version X"
+            android:textSize="16sp" />
+
         <laquay.com.canalestdt.component.AboutTitleTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,35 +141,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/grey_400" />
-
-        <laquay.com.canalestdt.component.AboutTitleTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about_author"
-            android:textSize="16sp" />
-
-        <laquay.com.canalestdt.component.AboutTitleTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-5dp"
-            android:text="@string/about_design"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="15dp"
             android:background="@color/grey_400" />
-
-        <TextView
-            android:id="@+id/fragment_about_version_name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TDTChannels - Version X"
-            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -192,6 +175,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="GSON" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Glide" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

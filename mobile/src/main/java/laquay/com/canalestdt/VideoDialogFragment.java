@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -55,7 +54,7 @@ public class VideoDialogFragment extends DialogFragment implements Player.EventL
         if (getArguments() != null) {
             String channelUrl = getArguments().getString(CHANNEL_KEY);
             if (getActivity() != null && getContext() != null && channelUrl != null) {
-                player = ExoPlayerFactory.newSimpleInstance(getContext());
+                player = new SimpleExoPlayer.Builder(getContext()).build();
 
                 // Produces DataSource instances through which media data is loaded.
                 dataSourceFactory = new DefaultDataSourceFactory(getContext(),
