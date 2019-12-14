@@ -1,9 +1,7 @@
 package laquay.com.canalestdt;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,12 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,17 +25,13 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import laquay.com.canalestdt.component.ChannelList;
 import laquay.com.canalestdt.controller.APIController;
 import laquay.com.canalestdt.controller.SharedPreferencesController;
-import laquay.com.canalestdt.controller.VolleyController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.Community;
 import laquay.com.canalestdt.model.Country;
@@ -53,15 +43,17 @@ import static laquay.com.canalestdt.DetailChannelActivity.TYPE_TV;
 public class TVFragment extends Fragment implements APIController.ResponseServerCallback {
     public static final String TAG = TVFragment.class.getSimpleName();
     private View rootView;
-    private GridView channelGridView;
-    private CountryArrayAdapter arrayAdapter;
+    private RecyclerView channelRecyclerView;
+    private ChannelListAdapter channelAdapter;
     private ArrayList<Country> countries;
     private ArrayList<Community> communities;
     private ArrayList<ChannelList> channelLists;
+    private ChannelItemFilter mFilter = new ChannelItemFilter();
 
     public static TVFragment newInstance() {
         return new TVFragment();
     }
+
 
     @Nullable
     @Override
@@ -78,7 +70,22 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
     }
 
     private void setUpElements() {
-        channelGridView = rootView.findViewById(R.id.channel_main_lv);
+        channelRecyclerView = rootView.findViewById(R.id.channel_main_lv);
+        channelAdapter = new ChannelListAdapter(getContext(), new ChannelListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(ChannelList channelList) {
+                showDetails(channelList);
+            }
+        });
+        channelAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                if (positionStart == 0 && channelRecyclerView.getLayoutManager() != null) {
+                    channelRecyclerView.getLayoutManager().scrollToPosition(0);
+                }
+            }
+        });
+        channelRecyclerView.setAdapter(channelAdapter);
     }
 
     private void setUpListeners() {
@@ -89,11 +96,8 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
     public void onChannelsLoadServer(ArrayList<Country> countries) {
         Log.i(TAG, "Redrawing channels - Start");
         this.countries = countries;
-
         createChannelList();
-
-        drawSelectedChannelLists();
-
+        channelAdapter.submitList(channelLists);
         Log.i(TAG, "Redrawing channels - End");
     }
 
@@ -113,14 +117,6 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                     }
                 }
             }
-        }
-    }
-
-    private void drawSelectedChannelLists() {
-        if (getContext() != null) {
-            arrayAdapter = new CountryArrayAdapter(getContext(), channelLists);
-            channelGridView.setAdapter(arrayAdapter);
-            arrayAdapter.notifyDataSetChanged();
         }
     }
 
@@ -146,12 +142,19 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
             @Override
             public boolean onQueryTextChange(String newText) {
                 // This will be fired every time you input any character.
-                if (arrayAdapter != null) {
-                    arrayAdapter.getFilter().filter(newText);
+                if (mFilter != null) {
+                    mFilter.filter(newText);
                 }
                 return false;
             }
         });
+    }
+
+    public void showDetails(ChannelList channel) {
+        Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, channel);
+        intent.putExtra(EXTRA_TYPE, TYPE_TV);
+        startActivity(intent);
     }
 
     @Override
@@ -240,7 +243,7 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                                                     SharedPreferencesController.getInstance().putValue("" + checkBox.getText(), checkBox.isChecked());
 
                                                     createChannelList();
-                                                    drawSelectedChannelLists();
+                                                    channelAdapter.submitList(channelLists);
                                                 }
                                             }
                                         }
@@ -262,126 +265,34 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
         }
     }
 
-    public class CountryArrayAdapter extends ArrayAdapter<ChannelList> implements Filterable {
-        private final ArrayList<ChannelList> channels;
-        private ArrayList<ChannelList> filteredChannels;
-        private ItemFilter mFilter = new ItemFilter();
 
-        public CountryArrayAdapter(@NonNull Context context, ArrayList<ChannelList> channels) {
-            super(context, 0, channels);
-            this.channels = channels;
-            this.filteredChannels = channels;
-        }
-
-        @NonNull
-        public Filter getFilter() {
-            return mFilter;
-        }
-
+    private class ChannelItemFilter extends Filter {
         @Override
-        public int getCount() {
-            return filteredChannels.size();
-        }
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String filterString = constraint.toString().toLowerCase();
+            FilterResults results = new FilterResults();
 
-        @NonNull
-        @Override
-        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            ViewHolder holder = new ViewHolder();
-            if (convertView == null) {
-                convertView = inflater.inflate(R.layout.item_list_channels, parent, false);
+            final ArrayList<ChannelList> filteredChannels = new ArrayList<>();
 
-                holder.imageView = convertView.findViewById(R.id.channel_icon);
-                holder.titleView = convertView.findViewById(R.id.channel_title);
-                holder.subtitleView = convertView.findViewById(R.id.channel_description);
+            String channelNameToFilter;
+            for (int i = 0; i < channelLists.size(); i++) {
+                ChannelList channelList = channelLists.get(i);
+                channelNameToFilter = channelList.getChannel().getName();
 
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            holder.titleView.setText(filteredChannels.get(position).getChannel().getName());
-            holder.subtitleView.setText(filteredChannels.get(position).getCountryName() + " - " + filteredChannels.get(position).getCommunityName());
-            holder.imageView.setImageResource(R.mipmap.ic_launcher);
-
-            // Temporary fix
-            String imageUrl = filteredChannels.get(position).getChannel().getLogo();
-            imageUrl = imageUrl.replace("http://graph.facebook.com", "https://graph.facebook.com");
-
-            final ViewHolder finalHolder = holder;
-            ImageRequest request = new ImageRequest(imageUrl,
-                    new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap bitmap) {
-                            finalHolder.imageView.setImageBitmap(bitmap);
-                        }
-                    }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null,
-                    new Response.ErrorListener() {
-                        public void onErrorResponse(VolleyError error) {
-                            finalHolder.imageView.setImageResource(R.mipmap.ic_launcher);
-                        }
-                    });
-            VolleyController.getInstance(getContext()).addToQueue(request);
-
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d(TAG, "onClick " + filteredChannels.get(position).getChannel().getName());
-                    Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
-                    intent.putExtra(EXTRA_MESSAGE, filteredChannels.get(position));
-                    intent.putExtra(EXTRA_TYPE, TYPE_TV);
-                    startActivity(intent);
+                if (channelNameToFilter.toLowerCase().contains(filterString)) {
+                    filteredChannels.add(channelList);
                 }
-            });
-
-            return convertView;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return getCount();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return position;
-        }
-
-        private class ItemFilter extends Filter {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String filterString = constraint.toString().toLowerCase();
-                FilterResults results = new FilterResults();
-
-                final ArrayList<ChannelList> filteredChannels = new ArrayList<>();
-
-                String channelNameToFilter;
-                for (int i = 0; i < channels.size(); i++) {
-                    ChannelList channelList = channels.get(i);
-                    channelNameToFilter = channelList.getChannel().getName();
-
-                    if (channelNameToFilter.toLowerCase().contains(filterString)) {
-                        filteredChannels.add(channelList);
-                    }
-                }
-
-                results.values = filteredChannels;
-                results.count = filteredChannels.size();
-                return results;
             }
 
-            @SuppressWarnings("unchecked")
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredChannels = (ArrayList<ChannelList>) results.values;
-                notifyDataSetChanged();
-            }
+            results.values = filteredChannels;
+            results.count = filteredChannels.size();
+            return results;
         }
 
-        class ViewHolder {
-            ImageView imageView;
-            TextView titleView;
-            TextView subtitleView;
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            channelAdapter.submitList((ArrayList<ChannelList>) results.values);
         }
     }
 }
