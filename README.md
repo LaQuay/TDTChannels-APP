@@ -34,3 +34,8 @@ En este proyecto y en la web de reproducción no se almacena ningún stream, ún
 Si localizas algún fallo, o deseas añadir otra funcionalidad, puedes contactarme o abrir una *issue*. Si además sabes solucionarlo, puedes hacer una *pull-request*.
 
 [Guidelines de código](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
+
+### Autores
+- Marc Vila (@LaQuay)
+- Pau (@playzzz)
+- Eliseo Juan (@eliseo-juan)
