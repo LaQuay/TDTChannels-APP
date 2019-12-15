@@ -28,6 +28,7 @@ import laquay.com.canalestdt.component.ChannelList;
 import laquay.com.canalestdt.controller.VolleyController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.ChannelOptions;
+import laquay.com.canalestdt.utils.VideoUtils;
 
 public class DetailChannelActivity extends AppCompatActivity {
     public static final String TAG = DetailChannelActivity.class.getSimpleName();
@@ -108,7 +109,13 @@ public class DetailChannelActivity extends AppCompatActivity {
                     String source = (String) channelSourceLV.getItemAtPosition(position);
                     switch (typeOfStream) {
                         case TYPE_TV:
-                            loadVideo(source);
+                            if (isReproducibleWithExoplayer(source)) {
+                                loadVideo(source);
+                            } else if (isReproducibleWithYoutube(source)) {
+                                VideoUtils.watchYoutubeVideo(getApplicationContext(), source);
+                            } else {
+                                VideoUtils.watchUnknownVideo(getApplicationContext(), source);
+                            }
                             break;
                         case TYPE_RADIO:
                             loadRadio(source);
@@ -135,6 +142,14 @@ public class DetailChannelActivity extends AppCompatActivity {
                     }
                 });
         VolleyController.getInstance(this).addToQueue(request);
+    }
+
+    private boolean isReproducibleWithExoplayer(String url) {
+        return url.contains("m3u8");
+    }
+
+    private boolean isReproducibleWithYoutube(String url) {
+        return url.contains("youtube") | url.contains("youtu.be");
     }
 
     private void loadVideo(String streamURL) {
