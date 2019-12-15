@@ -149,7 +149,7 @@ public class DetailChannelActivity extends AppCompatActivity {
     }
 
     private boolean isReproducibleWithYoutube(String url) {
-        return url.contains("youtube") | url.contains("youtu.be");
+        return url.contains("youtube") || url.contains("youtu.be");
     }
 
     private void loadVideo(String streamURL) {
