@@ -19,6 +19,8 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 public class VideoDialogFragment extends DialogFragment implements Player.EventListener {
@@ -56,9 +58,14 @@ public class VideoDialogFragment extends DialogFragment implements Player.EventL
             if (getActivity() != null && getContext() != null && channelUrl != null) {
                 player = new SimpleExoPlayer.Builder(getContext()).build();
 
-                // Produces DataSource instances through which media data is loaded.
-                dataSourceFactory = new DefaultDataSourceFactory(getContext(),
-                        Util.getUserAgent(getContext(), "laquay.com.canalestdt"));
+                DefaultHttpDataSourceFactory httpDataSourceFactory = new DefaultHttpDataSourceFactory(
+                        Util.getUserAgent(getContext(), "laquay.com.canalestdt"),
+                        DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
+                        DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS,
+                        true
+                );
+
+                dataSourceFactory = new DefaultDataSourceFactory(getContext(), httpDataSourceFactory);
 
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 loadVideo(channelUrl);
