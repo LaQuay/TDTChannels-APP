@@ -14,6 +14,7 @@ Aplicación oficial para la reproducción de los canales enlazados en el reposit
 - Temporizador de pantalla.
 - Soporte a Chromecast.
 - Soporte a Android TV.
+- Detectar si hay versión nueva de la aplicación.
 
 ### Descarga
 Podéis encontrar la última versión [desde GitHub](https://github.com/LaQuay/TDTChannels-APP/releases).
