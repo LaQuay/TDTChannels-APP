@@ -35,6 +35,7 @@ import laquay.com.canalestdt.controller.SharedPreferencesController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.Community;
 import laquay.com.canalestdt.model.Country;
+import laquay.com.canalestdt.utils.SourcesManagement;
 
 import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_MESSAGE;
 import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_TYPE;
@@ -98,7 +99,6 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
         Log.i(TAG, "Redrawing channels - Start");
         this.countries = countries;
         createChannelList();
-        channelAdapter.submitList(channelLists);
         Log.i(TAG, "Redrawing channels - End");
     }
 
@@ -113,15 +113,13 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
 
                 if (isShowingFavorites) {
                     for (int k = 0; k < channels.size(); ++k) {
-                        boolean isChannelFavorite = SharedPreferencesController.getInstance().getValue("" + channels.get(k).getName(), Boolean.class, false);
-                        if (isChannelFavorite) {
+                        if (SourcesManagement.isChannelFavorite(channels.get(k).getName())) {
                             channelLists.add(new ChannelList(countries.get(i).getName(),
                                     communities.get(j).getName(), channels.get(k)));
                         }
                     }
                 } else {
-                    //TODO: This should be inside a method
-                    boolean isCommunityShown = SharedPreferencesController.getInstance().getValue("" + communities.get(j).getName(), Boolean.class, true);
+                    boolean isCommunityShown = SourcesManagement.isCommunitySelected("" + communities.get(j).getName());
                     if (isCommunityShown) {
                         for (int k = 0; k < channels.size(); ++k) {
                             channelLists.add(new ChannelList(countries.get(i).getName(),
@@ -131,6 +129,8 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                 }
             }
         }
+
+        channelAdapter.submitList(channelLists);
     }
 
     @Override
@@ -176,7 +176,6 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                 }
                 isShowingFavorites = !isShowingFavorites;
                 createChannelList();
-                channelAdapter.submitList(channelLists);
                 return true;
             case R.id.action_filter:
                 if (getContext() != null) {
@@ -257,11 +256,9 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                                             for (int z = 0; z < columnLayout.getChildCount(); ++z) {
                                                 if (columnLayout.getChildAt(z) instanceof CheckBox) {
                                                     CheckBox checkBox = (CheckBox) columnLayout.getChildAt(z);
-                                                    // TODO This should be inside a "lib"/"controller"
-                                                    SharedPreferencesController.getInstance().putValue("" + checkBox.getText(), checkBox.isChecked());
+                                                    SourcesManagement.setCommunitySelected("" + checkBox.getText(), checkBox.isChecked());
 
                                                     createChannelList();
-                                                    channelAdapter.submitList(channelLists);
                                                 }
                                             }
                                         }
