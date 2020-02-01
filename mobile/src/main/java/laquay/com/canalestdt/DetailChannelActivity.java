@@ -5,6 +5,9 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -25,6 +29,7 @@ import com.android.volley.toolbox.ImageRequest;
 import java.util.ArrayList;
 
 import laquay.com.canalestdt.component.ChannelList;
+import laquay.com.canalestdt.controller.SharedPreferencesController;
 import laquay.com.canalestdt.controller.VolleyController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.ChannelOptions;
@@ -177,5 +182,36 @@ public class DetailChannelActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_detail_channel, menu);
+
+        if (checkIfItemIsFavorite(channel.getName())) {
+            menu.getItem(0).setIcon(R.drawable.heart);
+        } else {
+            menu.getItem(0).setIcon(R.drawable.heart_outline);
+        }
+        return true;
+    }
+
+    private boolean checkIfItemIsFavorite(String channelName) {
+        return SharedPreferencesController.getInstance().getValue("" + channelName, Boolean.class, false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_favorites) {
+            boolean isItemFavorite = checkIfItemIsFavorite(channel.getName());
+            if (isItemFavorite) {
+                item.setIcon(R.drawable.heart_outline);
+            } else {
+                item.setIcon(R.drawable.heart);
+            }
+            SharedPreferencesController.getInstance().putValue("" + channel.getName(), !isItemFavorite);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

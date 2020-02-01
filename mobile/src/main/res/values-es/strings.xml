@@ -2,6 +2,7 @@
     <string name="app_name">TDTChannels</string>
 
     <string name="nav_header_title">TDTChannels</string>
+    <string name="action_favorites">Favoritos</string>
     <string name="action_filter">Filtro</string>
     <string name="action_search">Buscar</string>
     <string name="nav_tv_channels">TV</string>

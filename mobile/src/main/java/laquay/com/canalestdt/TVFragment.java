@@ -49,6 +49,7 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
     private ArrayList<Community> communities;
     private ArrayList<ChannelList> channelLists;
     private ChannelItemFilter mFilter = new ChannelItemFilter();
+    private boolean isShowingFavorites;
 
     public static TVFragment newInstance() {
         return new TVFragment();
@@ -103,17 +104,29 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
 
     private void createChannelList() {
         channelLists = new ArrayList<>();
+
         for (int i = 0; i < countries.size(); ++i) {
             communities = countries.get(i).getCommunities();
 
             for (int j = 0; j < communities.size(); ++j) {
                 ArrayList<Channel> channels = communities.get(j).getChannels();
 
-                boolean isCommunityShown = SharedPreferencesController.getInstance().getValue("" + communities.get(j).getName(), Boolean.class, true);
-                if (isCommunityShown) {
+                if (isShowingFavorites) {
                     for (int k = 0; k < channels.size(); ++k) {
-                        channelLists.add(new ChannelList(countries.get(i).getName(),
-                                communities.get(j).getName(), channels.get(k)));
+                        boolean isChannelFavorite = SharedPreferencesController.getInstance().getValue("" + channels.get(k).getName(), Boolean.class, false);
+                        if (isChannelFavorite) {
+                            channelLists.add(new ChannelList(countries.get(i).getName(),
+                                    communities.get(j).getName(), channels.get(k)));
+                        }
+                    }
+                } else {
+                    //TODO: This should be inside a method
+                    boolean isCommunityShown = SharedPreferencesController.getInstance().getValue("" + communities.get(j).getName(), Boolean.class, true);
+                    if (isCommunityShown) {
+                        for (int k = 0; k < channels.size(); ++k) {
+                            channelLists.add(new ChannelList(countries.get(i).getName(),
+                                    communities.get(j).getName(), channels.get(k)));
+                        }
                     }
                 }
             }
@@ -124,6 +137,8 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.fragment_tv, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        isShowingFavorites = false;
 
         // Change color of the search button
         if (getContext() != null) {
@@ -150,16 +165,19 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
         });
     }
 
-    public void showDetails(ChannelList channel) {
-        Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, channel);
-        intent.putExtra(EXTRA_TYPE, TYPE_TV);
-        startActivity(intent);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_favorites:
+                if (isShowingFavorites) {
+                    item.setIcon(R.drawable.heart_outline);
+                } else {
+                    item.setIcon(R.drawable.heart);
+                }
+                isShowingFavorites = !isShowingFavorites;
+                createChannelList();
+                channelAdapter.submitList(channelLists);
+                return true;
             case R.id.action_filter:
                 if (getContext() != null) {
                     AlertDialog.Builder builder;
@@ -265,6 +283,12 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
         }
     }
 
+    public void showDetails(ChannelList channel) {
+        Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, channel);
+        intent.putExtra(EXTRA_TYPE, TYPE_TV);
+        startActivity(intent);
+    }
 
     private class ChannelItemFilter extends Filter {
         @Override

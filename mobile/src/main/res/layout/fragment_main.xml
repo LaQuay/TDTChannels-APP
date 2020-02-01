@@ -5,9 +5,9 @@
     android:id="@+id/channel_main_lv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:orientation="vertical"
     android:padding="4dp"
-    android:clipToPadding="false"
     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
     app:spanCount="2"
     tools:context=".MainActivity" />
