@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             String latestVersionName = response.getString("tag_name");
 
-                            if (latestVersionName.equals(versionName)) {
+                            if (!latestVersionName.equals(versionName)) {
                                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
                                 alert.setTitle(getString(R.string.download_new_version_title));
                                 alert.setMessage(getString(R.string.download_your_version_message) + ": " + versionName + "\n"
