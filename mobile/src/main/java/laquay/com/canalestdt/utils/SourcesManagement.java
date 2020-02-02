@@ -12,7 +12,7 @@ public class SourcesManagement {
     }
 
     public static boolean isCommunitySelected(String communityName) {
-        return SharedPreferencesController.getInstance().getValue("" + communityName, Boolean.class, false);
+        return SharedPreferencesController.getInstance().getValue("" + communityName, Boolean.class, true);
     }
 
     public static void setCommunitySelected(String communityName, boolean isSelected) {
