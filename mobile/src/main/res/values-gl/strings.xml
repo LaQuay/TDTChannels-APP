@@ -2,6 +2,7 @@
     <string name="app_name">TDTChannels</string>
 
     <string name="nav_header_title">TDTChannels</string>
+    <string name="action_favorites">Favoritos</string>
     <string name="action_filter">Filtro</string>
     <string name="action_search">Atopar</string>
     <string name="nav_tv_channels">TV</string>
@@ -34,4 +35,9 @@
     <string name="toast_function_not_implemented">Aínda non se implementou</string>
     <string name="alert_dialog_cancel">Cancelar</string>
     <string name="alert_dialog_ok">Aceptar</string>
+    <string name="download_new_version_title">¡Hai unha nova versión!</string>
+    <string name="download_yes">Descargar</string>
+    <string name="download_no">Cancelar</string>
+    <string name="download_your_version_message">A túa versión</string>
+    <string name="download_latest_version_message">A última version</string>
 </resources>

@@ -50,8 +50,7 @@ public class ChannelListAdapter extends ListAdapter<ChannelList, ChannelListAdap
         holder.titleView.setText(channel.getChannel().getName());
         holder.subtitleView.setText(String.format("%s - %s", channel.getCountryName(), channel.getCommunityName()));
 
-        // Temporary fix
-        String imageUrl = channel.getChannel().getLogo().replace("http://graph.facebook.com", "https://graph.facebook.com");
+        String imageUrl = channel.getChannel().getLogo();
         Glide.with(context).load(imageUrl).placeholder(R.mipmap.ic_launcher).fallback(R.mipmap.ic_launcher).into(holder.imageView);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

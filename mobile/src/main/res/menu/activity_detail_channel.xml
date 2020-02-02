@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_favorites"
+        android:icon="@drawable/heart_outline"
+        android:title="@string/action_favorites"
+        app:showAsAction="always|collapseActionView" />
+</menu>

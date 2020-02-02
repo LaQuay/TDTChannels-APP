@@ -5,6 +5,9 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -28,6 +32,7 @@ import laquay.com.canalestdt.component.ChannelList;
 import laquay.com.canalestdt.controller.VolleyController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.ChannelOptions;
+import laquay.com.canalestdt.utils.SourcesManagement;
 import laquay.com.canalestdt.utils.VideoUtils;
 
 public class DetailChannelActivity extends AppCompatActivity {
@@ -42,7 +47,6 @@ public class DetailChannelActivity extends AppCompatActivity {
     private ImageView channelImageIV;
     private TextView channelNameTV;
     private TextView channelURLTV;
-    private TextView channelSourceTV;
     private ListView channelSourceLV;
     private MediaPlayer mediaPlayer; //TODO This should be moved to another Dialog/Fragment
 
@@ -79,12 +83,10 @@ public class DetailChannelActivity extends AppCompatActivity {
         channelImageIV = findViewById(R.id.channel_image_detail_tv);
         channelNameTV = findViewById(R.id.channel_name_detail_tv);
         channelURLTV = findViewById(R.id.channel_url_detail_tv);
-        channelSourceTV = findViewById(R.id.channel_source_detail_tv);
         channelSourceLV = findViewById(R.id.channel_source_detail_lv);
     }
 
     private void setUpListeners() {
-
     }
 
     private void loadChannel() {
@@ -125,11 +127,7 @@ public class DetailChannelActivity extends AppCompatActivity {
             });
         }
 
-        // Temporary fix
-        String imageUrl = channel.getLogo();
-        imageUrl = imageUrl.replace("http://graph.facebook.com", "https://graph.facebook.com");
-
-        ImageRequest request = new ImageRequest(imageUrl,
+        ImageRequest request = new ImageRequest(channel.getLogo(),
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
@@ -177,5 +175,32 @@ public class DetailChannelActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_detail_channel, menu);
+
+        if (SourcesManagement.isChannelFavorite(channel.getName())) {
+            menu.getItem(0).setIcon(R.drawable.heart);
+        } else {
+            menu.getItem(0).setIcon(R.drawable.heart_outline);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_favorites) {
+            boolean isItemFavorite = SourcesManagement.isChannelFavorite(channel.getName());
+            if (isItemFavorite) {
+                item.setIcon(R.drawable.heart_outline);
+            } else {
+                item.setIcon(R.drawable.heart);
+            }
+            SourcesManagement.setChannelFavorite(channel.getName(), !isItemFavorite);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

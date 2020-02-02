@@ -2,6 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_favorites"
+        android:icon="@drawable/heart_outline"
+        android:title="@string/action_favorites"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
         android:id="@+id/action_filter"
         android:icon="@drawable/ic_filter_outline"
         android:title="@string/action_filter"
