@@ -35,4 +35,9 @@
     <string name="toast_function_not_implemented">Encara no implementat</string>
     <string name="alert_dialog_cancel">Cancel·lar</string>
     <string name="alert_dialog_ok">Acceptar</string>
+    <string name="download_new_version_title">Hi ha una nova versió!</string>
+    <string name="download_yes">Descarrega</string>
+    <string name="download_no">Cancel·lar</string>
+    <string name="download_your_version_message">La teva versió</string>
+    <string name="download_latest_version_message">Ultima versió</string>
 </resources>
