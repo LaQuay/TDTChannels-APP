@@ -9,6 +9,8 @@ También funciona en Android TV, aunque no está optimizada para ello.
   - Gestión de canales favoritos
   - Filtrado de canales por comunidades autónomas
 - Reproductor de radio
+  - Gestión de canales favoritos
+  - Filtrado de canales por comunidades autónomas
 
 ### Mejoras futuras
 - Añadir opción de marcar / desmarcar todos en filtrado de canales.
