@@ -1,19 +1,26 @@
 package laquay.com.canalestdt;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Filter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -27,18 +34,23 @@ import laquay.com.canalestdt.controller.APIController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.Community;
 import laquay.com.canalestdt.model.Country;
+import laquay.com.canalestdt.utils.SourcesManagement;
 
 import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_MESSAGE;
 import static laquay.com.canalestdt.DetailChannelActivity.EXTRA_TYPE;
 import static laquay.com.canalestdt.DetailChannelActivity.TYPE_RADIO;
 
+//TODO @LaQuay Este Fragment se podría mejorar uniendolo con el de TV.
 public class RadioFragment extends Fragment implements APIController.ResponseServerCallback {
     public static final String TAG = RadioFragment.class.getSimpleName();
     private View rootView;
     private RecyclerView channelRecyclerView;
     private ChannelListAdapter channelAdapter;
+    private ArrayList<Country> countries;
+    private ArrayList<Community> communities;
     private ArrayList<ChannelList> channelLists;
-    private RadioFragment.ChannelItemFilter mFilter = new RadioFragment.ChannelItemFilter();
+    private ChannelItemFilter mFilter = new ChannelItemFilter();
+    private boolean isShowingFavorites;
 
     public static RadioFragment newInstance() {
         return new RadioFragment();
@@ -66,6 +78,14 @@ public class RadioFragment extends Fragment implements APIController.ResponseSer
                 showDetails(channelList);
             }
         });
+        channelAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                if (positionStart == 0 && channelRecyclerView.getLayoutManager() != null) {
+                    channelRecyclerView.getLayoutManager().scrollToPosition(0);
+                }
+            }
+        });
         channelRecyclerView.setAdapter(channelAdapter);
     }
 
@@ -76,27 +96,40 @@ public class RadioFragment extends Fragment implements APIController.ResponseSer
     @Override
     public void onChannelsLoadServer(ArrayList<Country> countries) {
         Log.i(TAG, "Redrawing channels - Start");
+        this.countries = countries;
+        createChannelList();
+        Log.i(TAG, "Redrawing channels - End");
+    }
 
-        if (getContext() != null) {
-            ArrayList<ChannelList> channelLists = new ArrayList<>();
+    private void createChannelList() {
+        channelLists = new ArrayList<>();
 
-            for (int i = 0; i < countries.size(); ++i) {
-                ArrayList<Community> communities = countries.get(i).getCommunities();
+        for (int i = 0; i < countries.size(); ++i) {
+            communities = countries.get(i).getCommunities();
 
-                for (int j = 0; j < communities.size(); ++j) {
-                    ArrayList<Channel> channels = communities.get(j).getChannels();
+            for (int j = 0; j < communities.size(); ++j) {
+                ArrayList<Channel> channels = communities.get(j).getChannels();
 
+                if (isShowingFavorites) {
                     for (int k = 0; k < channels.size(); ++k) {
-                        channelLists.add(new ChannelList(countries.get(i).getName(),
-                                communities.get(j).getName(), channels.get(k)));
+                        if (SourcesManagement.isRadioChannelFavorite(channels.get(k).getName())) {
+                            channelLists.add(new ChannelList(countries.get(i).getName(),
+                                    communities.get(j).getName(), channels.get(k)));
+                        }
+                    }
+                } else {
+                    boolean isCommunityShown = SourcesManagement.isRadioCommunitySelected("" + communities.get(j).getName());
+                    if (isCommunityShown) {
+                        for (int k = 0; k < channels.size(); ++k) {
+                            channelLists.add(new ChannelList(countries.get(i).getName(),
+                                    communities.get(j).getName(), channels.get(k)));
+                        }
                     }
                 }
             }
-            this.channelLists = channelLists;
-            channelAdapter.submitList(this.channelLists);
         }
 
-        Log.i(TAG, "Redrawing channels - End");
+        channelAdapter.submitList(channelLists);
     }
 
     public void showDetails(ChannelList channel) {
@@ -109,7 +142,9 @@ public class RadioFragment extends Fragment implements APIController.ResponseSer
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.fragment_radio, menu);
-        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        isShowingFavorites = false;
 
         // Change color of the search button
         if (getContext() != null) {
@@ -134,6 +169,121 @@ public class RadioFragment extends Fragment implements APIController.ResponseSer
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_favorites:
+                if (isShowingFavorites) {
+                    item.setIcon(R.drawable.heart_outline);
+                } else {
+                    item.setIcon(R.drawable.heart);
+                }
+                isShowingFavorites = !isShowingFavorites;
+                createChannelList();
+                return true;
+            case R.id.action_filter:
+                if (getContext() != null) {
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(getContext());
+                    View v = getActivity().getLayoutInflater().inflate(R.layout.alert_filter_channels, null);
+
+                    final LinearLayout filterLL = v.findViewById(R.id.filters_alert_filter_channel_ll);
+
+                    for (int i = 0; i < countries.size(); ++i) {
+                        communities = countries.get(i).getCommunities();
+
+                        TextView country = new TextView(getActivity());
+                        country.setText(countries.get(i).getName());
+                        country.setTextSize(18);
+                        country.setPadding(0, 0, 0, 0);
+                        country.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                        LinearLayout.LayoutParams countryParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        if (i == 0) {
+                            countryParams.setMargins(0, 0, 0, 10);
+                        } else {
+                            countryParams.setMargins(0, 20, 0, 10);
+                        }
+                        country.setLayoutParams(countryParams);
+                        filterLL.addView(country);
+
+                        LinearLayout rootLayout = new LinearLayout(getContext());
+                        rootLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        rootLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+                        LinearLayout leftLayout = new LinearLayout(getContext());
+                        leftLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+                        leftLayout.setOrientation(LinearLayout.VERTICAL);
+
+                        LinearLayout rightLayout = new LinearLayout(getContext());
+                        rightLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+                        rightLayout.setOrientation(LinearLayout.VERTICAL);
+
+                        for (int j = 0; j < communities.size(); ++j) {
+                            boolean isCommunityShown = SourcesManagement.isRadioCommunitySelected(communities.get(j).getName());
+
+                            CheckBox community = new CheckBox(getActivity());
+                            community.setText(communities.get(j).getName());
+                            community.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+                            community.setChecked(isCommunityShown);
+                            community.setMaxLines(1);
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                            params.gravity = Gravity.NO_GRAVITY;
+                            community.setLayoutParams(params);
+
+                            if (j % 2 == 0) {
+                                leftLayout.addView(community);
+                            } else {
+                                rightLayout.addView(community);
+                            }
+                        }
+
+                        rootLayout.addView(leftLayout);
+                        if (rightLayout.getChildCount() > 0) {
+                            rootLayout.addView(rightLayout);
+                        }
+                        filterLL.addView(rootLayout);
+                    }
+                    builder.setView(v);
+                    builder.create();
+                    builder.setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            filterLL.getChildCount();
+
+                            for (int i = 0; i < filterLL.getChildCount(); ++i) {
+                                if (filterLL.getChildAt(i) instanceof LinearLayout) {
+                                    LinearLayout linearLayout = (LinearLayout) filterLL.getChildAt(i);
+
+                                    for (int j = 0; j < linearLayout.getChildCount(); ++j) {
+                                        if (linearLayout.getChildAt(j) instanceof LinearLayout) {
+                                            LinearLayout columnLayout = (LinearLayout) linearLayout.getChildAt(j);
+
+                                            for (int z = 0; z < columnLayout.getChildCount(); ++z) {
+                                                if (columnLayout.getChildAt(z) instanceof CheckBox) {
+                                                    CheckBox checkBox = (CheckBox) columnLayout.getChildAt(z);
+                                                    SourcesManagement.setRadioCommunitySelected("" + checkBox.getText(), checkBox.isChecked());
+
+                                                    createChannelList();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    builder.setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    builder.show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private class ChannelItemFilter extends Filter {

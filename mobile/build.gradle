@@ -6,8 +6,8 @@ android {
         applicationId "laquay.com.canalestdt"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 11
-        versionName "v0.6.0"
+        versionCode 12
+        versionName "v0.6.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -182,7 +182,14 @@ public class DetailChannelActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_detail_channel, menu);
 
-        if (SourcesManagement.isChannelFavorite(channel.getName())) {
+        boolean isItemFavorite;
+        if (typeOfStream.equals(TYPE_TV)) {
+            isItemFavorite = SourcesManagement.isTVChannelFavorite(channel.getName());
+        } else {
+            isItemFavorite = SourcesManagement.isRadioChannelFavorite(channel.getName());
+        }
+
+        if (isItemFavorite) {
             menu.getItem(0).setIcon(R.drawable.heart);
         } else {
             menu.getItem(0).setIcon(R.drawable.heart_outline);
@@ -193,13 +200,19 @@ public class DetailChannelActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_favorites) {
-            boolean isItemFavorite = SourcesManagement.isChannelFavorite(channel.getName());
+            boolean isItemFavorite;
+            if (typeOfStream.equals(TYPE_TV)) {
+                isItemFavorite = SourcesManagement.isTVChannelFavorite(channel.getName());
+                SourcesManagement.setTVChannelFavorite(channel.getName(), !isItemFavorite);
+            } else {
+                isItemFavorite = SourcesManagement.isRadioChannelFavorite(channel.getName());
+                SourcesManagement.setRadioChannelFavorite(channel.getName(), !isItemFavorite);
+            }
             if (isItemFavorite) {
                 item.setIcon(R.drawable.heart_outline);
             } else {
                 item.setIcon(R.drawable.heart);
             }
-            SourcesManagement.setChannelFavorite(channel.getName(), !isItemFavorite);
         }
         return super.onOptionsItemSelected(item);
     }

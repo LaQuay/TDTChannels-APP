@@ -31,7 +31,6 @@ import java.util.ArrayList;
 
 import laquay.com.canalestdt.component.ChannelList;
 import laquay.com.canalestdt.controller.APIController;
-import laquay.com.canalestdt.controller.SharedPreferencesController;
 import laquay.com.canalestdt.model.Channel;
 import laquay.com.canalestdt.model.Community;
 import laquay.com.canalestdt.model.Country;
@@ -113,13 +112,13 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
 
                 if (isShowingFavorites) {
                     for (int k = 0; k < channels.size(); ++k) {
-                        if (SourcesManagement.isChannelFavorite(channels.get(k).getName())) {
+                        if (SourcesManagement.isTVChannelFavorite(channels.get(k).getName())) {
                             channelLists.add(new ChannelList(countries.get(i).getName(),
                                     communities.get(j).getName(), channels.get(k)));
                         }
                     }
                 } else {
-                    boolean isCommunityShown = SourcesManagement.isCommunitySelected("" + communities.get(j).getName());
+                    boolean isCommunityShown = SourcesManagement.isTVCommunitySelected("" + communities.get(j).getName());
                     if (isCommunityShown) {
                         for (int k = 0; k < channels.size(); ++k) {
                             channelLists.add(new ChannelList(countries.get(i).getName(),
@@ -131,6 +130,13 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
         }
 
         channelAdapter.submitList(channelLists);
+    }
+
+    public void showDetails(ChannelList channel) {
+        Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, channel);
+        intent.putExtra(EXTRA_TYPE, TYPE_TV);
+        startActivity(intent);
     }
 
     @Override
@@ -215,7 +221,7 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                         rightLayout.setOrientation(LinearLayout.VERTICAL);
 
                         for (int j = 0; j < communities.size(); ++j) {
-                            boolean isCommunityShown = SharedPreferencesController.getInstance().getValue("" + communities.get(j).getName(), Boolean.class, true);
+                            boolean isCommunityShown = SourcesManagement.isTVCommunitySelected(communities.get(j).getName());
 
                             CheckBox community = new CheckBox(getActivity());
                             community.setText(communities.get(j).getName());
@@ -256,7 +262,7 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
                                             for (int z = 0; z < columnLayout.getChildCount(); ++z) {
                                                 if (columnLayout.getChildAt(z) instanceof CheckBox) {
                                                     CheckBox checkBox = (CheckBox) columnLayout.getChildAt(z);
-                                                    SourcesManagement.setCommunitySelected("" + checkBox.getText(), checkBox.isChecked());
+                                                    SourcesManagement.setTVCommunitySelected("" + checkBox.getText(), checkBox.isChecked());
 
                                                     createChannelList();
                                                 }
@@ -278,13 +284,6 @@ public class TVFragment extends Fragment implements APIController.ResponseServer
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public void showDetails(ChannelList channel) {
-        Intent intent = new Intent(getActivity(), DetailChannelActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, channel);
-        intent.putExtra(EXTRA_TYPE, TYPE_TV);
-        startActivity(intent);
     }
 
     private class ChannelItemFilter extends Filter {
