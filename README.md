@@ -12,6 +12,10 @@ También funciona en Android TV y Fire TV, aunque no está optimizada para ello.
 - Selección de canales favoritos
 - Filtrado de canales por país y/o comunidades autónomas
 
+| <img src="https://raw.githubusercontent.com/LaQuay/TDTChannels-APP/master/extras/screenshot_tv_061.png" width="60%"> | <img src="https://raw.githubusercontent.com/LaQuay/TDTChannels-APP/master/extras/screenshot_radio_061.png" width="60%"> |
+|:--------------:|:--------------:|
+| **Televisión** | **Radio** |
+
 ### Mejoras futuras
 - Añadir opción de marcar / desmarcar todos en filtrado de canales.
 - Reproducción de radio en background (https://github.com/googlesamples/android-MediaBrowserService)
@@ -20,8 +24,13 @@ También funciona en Android TV y Fire TV, aunque no está optimizada para ello.
 - Soporte a Chromecast.
 
 ### Descarga
-Podéis encontrar la última versión [desde GitHub](https://github.com/LaQuay/TDTChannels-APP/releases).
-*Por disconformidades con Google Play esta aplicación no aparecerá en su mercado de aplicaciones.*
+Podéis encontrar la última versión [desde GitHub](https://github.com/LaQuay/TDTChannels-APP/releases/). *Por disconformidades con Google Play esta aplicación no aparecerá en su mercado de aplicaciones.*
+
+<a href="https://github.com/LaQuay/TDTChannels-APP/releases/">
+  <img src="https://user-images.githubusercontent.com/663460/26973090-f8fdc986-4d14-11e7-995a-e7c5e79ed925.png" width="200px">
+</a>
+
+
 
 ### Noticias
 *06/2019* - [El Androide Libre - La mejor app para ver la tele en tu Android y la más actualizada](https://elandroidelibre.elespanol.com/2019/06/mejor-app-ver-tele-android-mas-actualizada-apk.html)
