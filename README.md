@@ -1,16 +1,16 @@
 # TDTChannels-APP
 Aplicación oficial para la reproducción de los canales enlazados en el repositorio [TDTChannels](https://github.com/LaQuay/TDTChannels/). 
 
-La aplicación es compatible con cualquier dispositivo Android(4.4 o más). 
-También funciona en Android TV, aunque no está optimizada para ello.
+Disfruta de los canales de televisión y radio proporcionados por [TDTChannels](https://github.com/LaQuay/TDTChannels/) de forma gratuita, legal y sin anuncios en tu dispositivo Android!
+
+La aplicación es compatible con cualquier dispositivo Android 4.4 o superior. 
+También funciona en Android TV y Fire TV, aunque no está optimizada para ello.
 
 ### Funciones principales
 - Reproductor de canales de televisión
-  - Gestión de canales favoritos
-  - Filtrado de canales por comunidades autónomas
-- Reproductor de radio
-  - Gestión de canales favoritos
-  - Filtrado de canales por comunidades autónomas
+- Reproductor de emisoras de radio
+- Selección de canales favoritos
+- Filtrado de canales por país y/o comunidades autónomas
 
 ### Mejoras futuras
 - Añadir opción de marcar / desmarcar todos en filtrado de canales.
@@ -27,7 +27,7 @@ Podéis encontrar la última versión [desde GitHub](https://github.com/LaQuay/T
 *06/2019* - [El Androide Libre - La mejor app para ver la tele en tu Android y la más actualizada](https://elandroidelibre.elespanol.com/2019/06/mejor-app-ver-tele-android-mas-actualizada-apk.html)
 
 ### Licencia del proyecto
-Tal como indica la licencia MIT, cualquier persona puede hacer el uso que considere de este repositorio, el único condicionante es que se debe poder verse explícitamente que la información que está utilizando procede de este repositorio.
+Tal como indica la licencia MIT, cualquier persona puede hacer el uso que considere de este repositorio y aplicación, el único condicionante es que se debe poder ver explícitamente que la aplicación en la que está basada procede de este repositorio.
 
 ### Ley de propiedad
 En este proyecto y en la web de reproducción no se almacena ningún stream, únicamente enlaces que proporciona el mismo distribuidor de la emisión de forma oficial, mediante su propia web o servicio público. 
