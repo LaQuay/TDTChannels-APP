@@ -1,4 +1,4 @@
-**Para la versión de código cerrado dirigete a [TDTChannels](www.tdtchannels.com)**.
+**Para la versión de código cerrado dirigete a [TDTChannels](http://www.tdtchannels.com)**.
 
 # TDTChannels-APP
 Aplicación oficial en su versión _Open Source_ para la reproducción de los canales enlazados en el repositorio [TDTChannels](https://github.com/LaQuay/TDTChannels/). 
