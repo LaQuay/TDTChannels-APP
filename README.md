@@ -21,13 +21,6 @@ También funciona en Android TV y Fire TV, aunque no está optimizada para ello.
 |:--------------:|:--------------:|
 | **Televisión** | **Radio** |
 
-### Mejoras futuras
-- Añadir opción de marcar / desmarcar todos en filtrado de canales.
-- Reproducción de radio en background (https://github.com/googlesamples/android-MediaBrowserService)
-- Inclusión del EPG del canal.
-- Temporizador de pantalla.
-- Soporte a Chromecast.
-
 ### Descarga
 Podéis encontrar la última versión [desde GitHub](https://github.com/LaQuay/TDTChannels-APP/releases/). *Por disconformidades con Google Play esta aplicación no aparecerá en su mercado de aplicaciones.*
 
