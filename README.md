@@ -1,5 +1,7 @@
+**Para la versión de código cerrado dirigete a [TDTChannels](www.tdtchannels.com)**.
+
 # TDTChannels-APP
-Aplicación oficial para la reproducción de los canales enlazados en el repositorio [TDTChannels](https://github.com/LaQuay/TDTChannels/). 
+Aplicación oficial en su versión _Open Source_ para la reproducción de los canales enlazados en el repositorio [TDTChannels](https://github.com/LaQuay/TDTChannels/). 
 
 Disfruta de los canales de televisión y radio proporcionados por [TDTChannels](https://github.com/LaQuay/TDTChannels/) de forma gratuita, legal y sin anuncios en tu dispositivo Android!
 
@@ -45,11 +47,12 @@ Si localizas algún fallo, o deseas añadir otra funcionalidad, puedes contactar
 [Guidelines de código](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
 
 ### Autores
-
 #### Software
 - Marc Vila (@LaQuay)
-- Eliseo Juan (@eliseo-juan)
 
 #### Diseño
-- Marc Vila (@LaQuay)
 - Pau (@playzzz)
+
+#### Agradecimientos
+- Eliseo Juan (@eliseo-juan)
+- Y a todos aquellos que colaboran con el proyecto!
