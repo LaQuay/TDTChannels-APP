@@ -23,16 +23,36 @@
             android:text="TDTChannels - Version X"
             android:textSize="16sp" />
 
-        <laquay.com.canalestdt.component.AboutTitleTextView
+        <laquay.com.open.canalestdt.component.AboutTitleTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/about_social_networks"
             android:textSize="16sp" />
 
         <LinearLayout
-            android:id="@+id/fragment_settings_share_ll"
+            android:id="@+id/fragment_settings_website_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:text="@string/about_website" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_settings_share_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
             <ImageView
                 android:layout_width="28dp"
@@ -108,13 +128,39 @@
                 android:text="@string/about_main_repo_source" />
         </LinearLayout>
 
+        <laquay.com.open.canalestdt.component.AboutTitleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_donate" />
+
+        <LinearLayout
+            android:id="@+id/fragment_settings_buy_coffee_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/about_donate_text" />
+
+            <ImageView
+                android:layout_width="256dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:src="@drawable/buy_me_a_coffee_logo" />
+        </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="15dp"
             android:background="@color/grey_400" />
 
-        <laquay.com.canalestdt.component.AboutTitleTextView
+        <laquay.com.open.canalestdt.component.AboutTitleTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/about_tv_and_radio_title"
@@ -126,7 +172,7 @@
             android:layout_height="wrap_content"
             android:text="@string/about_tv_and_radio" />
 
-        <laquay.com.canalestdt.component.AboutTitleTextView
+        <laquay.com.open.canalestdt.component.AboutTitleTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/about_app_improvement_title"
@@ -150,7 +196,7 @@
             android:layout_height="wrap_content"
             android:text="@string/about_app_info" />
 
-        <laquay.com.canalestdt.component.AboutTitleTextView
+        <laquay.com.open.canalestdt.component.AboutTitleTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/about_app_license"

@@ -9,9 +9,13 @@
     <string name="nav_radio_channels">Radio</string>
     <string name="nav_tools">Settings</string>
 
+    <string name="about_donate">Buy me a coffee!</string>
+    <string name="about_donate_text">When making a donation. You are contributing to keep this project alive and directly you will be helping to maintain its entire ecosystem, including the server and web domain, the maintenance of the lists, the Android application, etc. \nIn this way, this project can continue to operate offering free content, without advertising.</string>
+
     <string name="about_social_networks">Social Networks</string>
     <string name="about_share">Share TDTChannels</string>
     <string name="about_telegram">Telegram</string>
+    <string name="about_website">TDTChannels - Website</string>
     <string name="about_main_repo">App. Repository</string>
     <string name="about_main_repo_source">Source Repository</string>
     <string name="about_author">Development @LaQuay</string>

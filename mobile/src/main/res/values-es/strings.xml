@@ -9,9 +9,13 @@
     <string name="nav_radio_channels">Radio</string>
     <string name="nav_tools">Ajustes</string>
 
+    <string name="about_donate">Colabora</string>
+    <string name="about_donate_text">Al realizar una donación. Contribuyes a que este proyecto siga vivo y directamente estarás ayudando a mantener todo el ecosistema del mismo, incluyendo el servidor y dominio web, el mantenimiento de las listas, la aplicación Android, etc.\nDe esta forma, este proyecto podrá seguir funcionando ofreciendo contenido gratuito, sin publicidad.</string>
+
     <string name="about_social_networks">Redes Sociales</string>
     <string name="about_share">Comparte TDTChannels</string>
     <string name="about_telegram">Telegram</string>
+    <string name="about_website">TDTChannels - Sitio web</string>
     <string name="about_main_repo">Repositorio de la app</string>
     <string name="about_main_repo_source">Repositorio fuente</string>
     <string name="about_author">Desarrollador @LaQuay</string>
